@@ -9,7 +9,7 @@ const HoverSections = [
     header: 'Section 1',
     text:
       'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt.',
-    link: '/strategie',
+    link: '/link',
     linkText: 'Work',
     // image: image1
   },
@@ -17,7 +17,7 @@ const HoverSections = [
     header: 'Section 2',
     text:
       'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt.',
-    link: '/technologie',
+    link: '/link',
     linkText: 'databases',
     // image: image2
   },
@@ -25,7 +25,7 @@ const HoverSections = [
     header: 'Section 3',
     text:
       'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt.',
-    link: '/begeisterung',
+    link: '/link',
     linkText: 'gitlab',
     // image: image3
   }
