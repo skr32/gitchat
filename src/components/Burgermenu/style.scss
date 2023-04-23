@@ -1,0 +1,31 @@
+.burgermenu {
+    background: transparent;
+    border: 10px solid var(--button-color, #000);
+    border-radius: 1rem;
+  
+    .line {
+      transition: transform 0.3s ease-in-out;
+      transform-origin: center;
+    
+      // to do: add animation on aria-expanded=false
+      &[aria-expanded="true"] {
+        transition: y 300ms ease-in, rotate 300ms ease-in 300ms, opacity 300ms;
+      }
+    }
+  
+    &[aria-expanded="true"] .top {
+        width:100%;
+        transform:rotate(45deg) translateX(-10px);
+      y:45;
+    }
+  
+    &[aria-expanded="true"] .middle {
+      opacity: 0;
+    }
+    
+    &[aria-expanded="true"] .bottom {
+        width:100%;
+        transform:rotate(-45deg) translateX(-10px);
+        y:45;
+    }
+  }
