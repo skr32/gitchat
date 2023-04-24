@@ -2,10 +2,7 @@ version: '3'
 
 services:
   finalproject:
-    image: node:18
-    volumes:
-      - ./:/finalproject
-    working_dir: /finalproject
+    build: .
     ports:
-      -  '5173:5173'
-    command: bash -c 'npm i && npm run dev -- --host'
+      -  '49160:8080'
+    
