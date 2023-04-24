@@ -4,6 +4,12 @@ this project is meant to be the final project in "Databases & System development
 
 ## Getting started
 
+To run the latest image just run the following command or use the docker-compose.yaml:
+```
+docker run -d -p 80:80 skr20/finalproject:dev
+```
+
+
 to clone the project on your local device follow these steps:
 
 ```
