@@ -1,13 +1,18 @@
-FROM node:18
-WORKDIR /app
-
+# Build stage
+FROM node AS build
+WORKDIR /build
 COPY package.json .
 COPY package-lock.json .
-
 RUN npm install
-RUN npm ci --omit=dev
-
 COPY . .
+RUN npm run build
 
-EXPOSE 8080
-CMD ["npm", "run", "dev"]
+# Production stage
+FROM nginx:alpine
+#WORKDIR /app
+#COPY --from=build /app/dist /app
+COPY --from=build /build/dist/ /usr/share/nginx/html/
+RUN ls -la /usr/share/nginx/html/
+
+#EXPOSE 8080
+#CMD ["npm", "start"]
