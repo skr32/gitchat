@@ -4,5 +4,5 @@ services:
   finalproject:
     build: .
     ports:
-      -  '49160:8080'
+      -  '80:80'
     
