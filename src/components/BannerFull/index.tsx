@@ -79,7 +79,7 @@ export function BannerFull() {
     }
     : {};
 
-  const [isHovered, setIsHovered] = useState(false);
+  const [isHovered] = useState(false);
 
 
   return (
