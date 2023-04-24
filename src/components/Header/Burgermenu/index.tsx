@@ -11,7 +11,6 @@ export function Burgermenu() {
   return (
     <button className="burgermenu" aria-expanded={isOpen} onClick={toggleMenu}>
       <svg viewBox="0 0 100 100">
-        {/* to do: add rect values to scss file  */}
         <rect className="line top" rx="5"></rect>
         <rect className="line middle" rx="5"></rect>
         <rect className="line bottom" rx="5"></rect>

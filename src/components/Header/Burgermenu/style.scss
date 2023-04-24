@@ -25,8 +25,6 @@
     &:last-child{
       y:70%;
     }
-
-    // to do: add animation on aria-expanded=false
   }
   &[aria-expanded="false"] .middle {
   opacity: 1;
