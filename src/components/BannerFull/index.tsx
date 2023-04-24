@@ -40,8 +40,8 @@ export function BannerFull() {
     setLastHovered(index);
 
     const element = document.getElementById(`section-${index}`);
-    const p = element?.childNodes[1];
-    const button = element?.childNodes[2];
+    const p = element?.childNodes[1] as HTMLElement;
+    const button = element?.childNodes[2] as HTMLElement;
     if (p) {
       // to do: underlined as error because .style cannot refer to childnode
       p.style.display = "block";
@@ -56,10 +56,9 @@ export function BannerFull() {
 
   function handleMouseOut() {
     setHoveredIndex(1);
-    setLastHovered(1);
     const element = document.getElementById(`section-${lastHovered}`);
-    const p = element?.childNodes[1];
-    const button = element?.childNodes[2];
+    const p = element?.childNodes[1] as HTMLElement;
+    const button = element?.childNodes[2] as HTMLElement;
     if (p) {
       p.style.display = "none";
     }
@@ -73,7 +72,7 @@ export function BannerFull() {
 
   const bannerFullStyle = hoveredIndex !== null
     ? {
-      backgroundImage: `url(${HoverSections[hoveredIndex].image})`,
+      // backgroundImage: `url(${HoverSections[hoveredIndex].image})`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       width: '99.4vw',
