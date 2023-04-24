@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import './style.scss'
 
-const headerLinks = [
+export const headerLinks = [
     {title: 'projects', link: ''}, 
     {title: 'work', link: ''}, 
     {title: 'contact', link: ''}
