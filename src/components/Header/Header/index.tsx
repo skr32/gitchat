@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import './style.scss'
 import { ChangeTheme } from "../ChangeTheme";
 import { Search } from "../Search";
+import { Cart } from "../Cart";
 
 export const headerLinks = [
     {title: 'projects', link: ''}, 
@@ -41,6 +42,7 @@ export function Header() {
                         <a href={link.link}>{link.title}</a>
                     </li>
                 ))}
+                <Cart />
             </ul>
         </div>
     )
