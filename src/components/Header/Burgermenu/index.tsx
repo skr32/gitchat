@@ -3,6 +3,7 @@ import './style.scss';
 
 import { headerLinks } from '../Header';
 import { ChangeTheme } from '../ChangeTheme';
+import { Search } from '../Search';
 
 export function Burgermenu() {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,6 +31,8 @@ export function Burgermenu() {
               <a href={link.link}>{link.title}</a>
             </li>
           ))}
+          <br/>
+          <Search />
           <br/>
           <ChangeTheme />
         </ul>
