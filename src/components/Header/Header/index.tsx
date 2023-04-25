@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import './style.scss'
+import { ChangeTheme } from "../ChangeTheme";
 
 export const headerLinks = [
     {title: 'projects', link: ''}, 
@@ -32,6 +33,7 @@ export function Header() {
                 TestTest
             </a>
             <ul className="header__items">
+                <ChangeTheme />
                 {headerLinks.map( (link) => (
                     <li>
                         <a href={link.link}>{link.title}</a>

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './style.scss';
 
 import { headerLinks } from '../Header';
+import { ChangeTheme } from '../ChangeTheme';
 
 export function Burgermenu() {
   const [isOpen, setIsOpen] = useState(false);
@@ -29,6 +30,8 @@ export function Burgermenu() {
               <a href={link.link}>{link.title}</a>
             </li>
           ))}
+          <br/>
+          <ChangeTheme />
         </ul>
       </div>
     </>
