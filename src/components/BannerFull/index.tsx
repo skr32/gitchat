@@ -43,7 +43,6 @@ export function BannerFull() {
     const p = element?.childNodes[1] as HTMLElement;
     const button = element?.childNodes[2] as HTMLElement;
     if (p) {
-      // to do: underlined as error because .style cannot refer to childnode
       p.style.display = "block";
     }
     if (button) {
