@@ -3,6 +3,7 @@ import './style.scss'
 import { ChangeTheme } from "../ChangeTheme";
 import { Search } from "../Search";
 import { Cart } from "../Cart";
+import { User } from "../User";
 
 export const headerLinks = [
     {title: 'projects', link: ''}, 
@@ -35,14 +36,15 @@ export function Header() {
                 TestTest
             </a>
             <ul className="header__items">
-                <Search />
                 <ChangeTheme />
                 {headerLinks.map( (link) => (
                     <li>
                         <a href={link.link}>{link.title}</a>
                     </li>
                 ))}
-                <Cart />
+                <Search />
+                <User />
+                <Cart count={3} />
             </ul>
         </div>
     )
