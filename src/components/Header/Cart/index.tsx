@@ -1,7 +1,6 @@
 import './style.scss'
 
-export function Cart(count: number) {
-    count = 3;
+export function Cart( { count }: { count: number } ) {
     return (
         <li>
             <a className="cart-icon" href=''>

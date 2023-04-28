@@ -27,7 +27,7 @@ export function Header() {
     
         return () => window.removeEventListener('scroll', handleScroll);
       }, [prevScrollPos]);
-    
+    let count:number = 3;
     return(
         <div className="header" style={
             { transform: visible ? 'translateY(-100%)' : 'translateY(0%)',
@@ -44,7 +44,7 @@ export function Header() {
                 ))}
                 <Search />
                 <User />
-                <Cart count={3} />
+                <Cart count={count}/>
             </ul>
         </div>
     )
