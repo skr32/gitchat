@@ -38,4 +38,7 @@ git checkout -b [branchname]
 git pull
 ```
 
-
+- to merge your local branch in the main branch
+-> push changes into your branch
+-> create merge request on gitlab
+-> test your changes

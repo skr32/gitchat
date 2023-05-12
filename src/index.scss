@@ -1,18 +1,25 @@
-:root {
+:root, html[data-theme='dark'] {
   --primary-color:#6C72CB;
   --secondary-color:#CB69C1;
   --contrast-color:#2e2735;
   --background-color:#242424;
+  --text-color:#E1D9D1;
   --dark-text-color:#454545;
-  --light-text-color:#E1D9D1;
   --background-rgba:rgba(23, 24, 31, 0.6);
   --shadow: 7px 7px 9px 1px rgba(0, 0, 0, 0.9), 7px 7px 9px 1px rgba(0, 0, 0, 0.9);
   --underline: underline var(--primary-color) 2px;
   --space:2rem;
 }
+
+html[data-theme='light'] {
+  --contrast-color:#9686a7;
+  --background-color:#DEE4E7;
+  --background-rgba:rgba(255, 255, 255, 0.6);
+  --text-color:#454545;
+}
 body{
   font-family: 'Open Sans', sans-serif;
-  color:var(--light-text-color);
+  color:var(--text-color);
   background: var(--background-color);
   line-height: 1.5;
   font-weight: 400;
