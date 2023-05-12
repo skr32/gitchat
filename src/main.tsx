@@ -1,14 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.scss'
+import App from './App'
 
-import { BannerFull } from './components/BannerFull/index.tsx'
-import { HeaderHandler } from './components/Header/index.tsx'
+//import { BannerFull } from './components/BannerFull/index.tsx'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <HeaderHandler />
-    <BannerFull />
-    <BannerFull />
+    <App />
   </React.StrictMode>,
 )
