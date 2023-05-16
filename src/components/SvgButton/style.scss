@@ -1,0 +1,79 @@
+.svgbutton {
+    cursor: pointer;
+    height: 50px;
+    width: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem auto;
+    border: 0;
+    border-radius: 1rem;
+
+    a {
+        text-decoration: none;
+        color:var(--dark-text-color);
+        font-weight: 600;
+        font-size: 1rem;
+    }
+}
+
+.glow-effect {
+    position: relative;
+    --line-length: 15px; 
+    --line-thickness: 1px;
+    --line-color: var(--primary-color);
+    --blur-color: var(--primary-color);
+    --blur-size: 5px;
+    --animation: 0.8s;
+    --offset: 150px;
+}
+
+.glow-container {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0;
+    inset: calc(var(--offset) / -2);
+    width: calc(100% + var(--offset));
+    height: calc(100% + var(--offset));
+
+    &__blur,
+    &__line {
+        width: calc(100% - var(--offset));
+        height: calc(100% - var(--offset));
+        x: calc((var(--offset) / 2));
+        y: calc((var(--offset) / 2));
+        rx: 1rem;
+        fill: none;
+        stroke-dasharray: var(--line-length) calc(50px - var(--line-length));
+    }
+
+    &__line {
+        stroke: var(--line-color);
+        stroke-width: var(--line-thickness);
+    }
+
+    &__blur {
+        filter: blur(var(--blur-size));
+        stroke: var(--blur-color);
+        stroke-width: var(--blur-size);
+    }
+}
+
+.glow-effect:hover :is(.glow-container__line, .glow-container__blur) {
+    stroke-dashoffset: -100px;
+    transition: stroke-dashoffset var(--animation) ease-in;
+}
+
+.glow-effect:hover .glow-container {
+    animation: glow ease-in-out var(--animation);
+}
+
+@keyframes glow {
+    0%,
+    100% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+}
