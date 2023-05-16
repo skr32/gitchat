@@ -18,6 +18,8 @@ html[data-theme='light'] {
   --text-color:#454545;
 }
 body{
+  // height: 100vh;
+  // overflow: hidden;
   font-family: 'Open Sans', sans-serif;
   color:var(--text-color);
   background: var(--background-color);

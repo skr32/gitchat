@@ -1,0 +1,23 @@
+.message-container { 
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+margin-top:15px;
+}
+
+.message {
+        max-width: 40%;
+        width:min-content;
+        background-color: var(--contrast-color);
+        padding:15px;
+        border-radius: 15px;
+}
+.right-corner {
+    align-self: flex-end;
+    margin-right:15px;
+}
+
+.left-corner {
+    align-self: flex-start;
+    margin-left:15px;
+  }
