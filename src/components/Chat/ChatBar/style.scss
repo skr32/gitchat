@@ -1,14 +1,13 @@
 .sidebar-container {
 margin-right:5px;
 height: 100vh;
-  overflow: auto;
+  overflow-x: hidden;
 }
 
 .sidebar {
     width: 20%;
     min-height: 100vh;
     background: var(--contrast-color);
-    overflow: auto;
 
     &__title {
         color:var(--secondary-color);
