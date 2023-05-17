@@ -6,16 +6,12 @@ import './style.scss'
 import { Chat } from './Chat'
 
 export function ChatWindow() {
-    const [isExpanded, setIsExpanded] = useState(true);
-  
-    const toggleMenu = () => {
-      setIsExpanded(!isExpanded);
-    };
+    const [isExpanded] = useState(true);
   
     return (
       <>
       <div className='chat'>
-        <ChatBar isExpanded={isExpanded} toggle={toggleMenu} />
+        <ChatBar />
         <Chat expanded={isExpanded} />
       </div>
       </>
