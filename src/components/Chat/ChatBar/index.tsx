@@ -15,7 +15,7 @@ export function ChatBar() {
             <button className="sidebar__burger"
                 aria-expanded={isOpen}
                 onClick={toggleMenu}
-                style={{ position: isOpen ? 'absolute' : 'fixed', left: !isOpen ? '25px' : '250px'}}>
+                style={{ position: isOpen ? 'absolute' : 'fixed', left: !isOpen ? '25px' : '210px'}}>
                 <svg viewBox="0 0 100 100">
                     <rect className="line top" rx="5"></rect>
                     <rect className="line middle" rx="5"></rect>
@@ -29,6 +29,8 @@ export function ChatBar() {
                 transform: !isOpen ? 'translateX(-100%)' : 'translateX(0%)',
                 transition: 'all 0.5s ease',
             }}>
+                <div>
+
                 <span className='sidebar__title'>
                 <h2>CodeChat<img src={logo} alt="logo" /></h2>
                 </span>
@@ -37,6 +39,7 @@ export function ChatBar() {
                     <h2>Inbox</h2>
                     <input type="text" placeholder='Search Chats...'></input>
                     <span></span>
+                </div>
                 </div>
                 <div className='sidebar__preview'>
                     <ChatPreview />
