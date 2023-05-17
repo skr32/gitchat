@@ -25,7 +25,7 @@ export function ChatBar( { toggle }:any ) {
             <button className="sidebar__burger"
                 aria-expanded={isOpen}
                 onClick={toggleMenu}
-                style={{ position: isOpen ? 'absolute' : 'fixed', left: !isOpen ? '2%' : '20%'}}>
+                style={{ position: isOpen ? 'absolute' : 'fixed', left: !isOpen ? '25px' : '250px'}}>
                 <svg viewBox="0 0 100 100">
                     <rect className="line top" rx="5"></rect>
                     <rect className="line middle" rx="5"></rect>
