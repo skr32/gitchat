@@ -5,7 +5,7 @@ import logo from '../../assets/chatLogo.png'
 import { SvgButton } from '../SvgButton';
 
 
-export function Join() {
+export function LogIn() {
 
     const [name, setName] = useState('');
     const [room, setRoom] = useState('');
@@ -17,12 +17,12 @@ export function Join() {
                 <input placeholder="Username" type="text"
                     onChange={(event) => setName(event.target.value)}
                 ></input>
-                <input placeholder="Room ID" type="text"
+                <input placeholder="Password" type="password"
                     onChange={(event) => setRoom(event.target.value)}
                 ></input>
                 <BrowserRouter>
                 <Link onClick={ (event) => (!name || !room) ? event.preventDefault() : null} to={`/chat?name=${name}&room=${room}`}>
-                    <SvgButton text={'Join Chat'} />
+                    <SvgButton text={'Log In'} />
                 </Link>
                 </BrowserRouter>
             </div>

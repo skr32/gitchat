@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import './index.scss'
 // import App from './App'
 
-import { Join } from './components/Join/index.tsx'
+import { LogIn } from './components/LogIn/index.tsx'
 import { Burgermenu } from './components/Burgermenu'
 import { ChatWindow } from './components/Chat/index.tsx'
 //import { BannerFull } from './components/BannerFull/index.tsx'
@@ -11,7 +11,7 @@ import { ChatWindow } from './components/Chat/index.tsx'
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     {/* <Burgermenu /> */}
-    {/* <Join /> */}
-    <ChatWindow/>
+    <LogIn />
+    {/* <ChatWindow/> */}
   </React.StrictMode>,
 )
