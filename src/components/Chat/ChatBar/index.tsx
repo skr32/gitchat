@@ -1,20 +1,10 @@
 import './style.scss'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import logo from '../../../assets/chatLogo.png'
 import { ChatPreview } from './ChatPreview';
 
-export function ChatBar( { toggle }:any ) {
+export function ChatBar() {
     const [isOpen, setIsOpen] = useState(true);
-
-    // useEffect(() => {
-    //     if (!isOpen) {
-    //       const timeoutId = setTimeout(() => {
-    //         setIsOpen(false);
-    //       }); // Adjust the delay time (in milliseconds) as needed
-    
-    //       return () => clearTimeout(timeoutId);
-    //     }
-    //   }, [isOpen]);
     
       const toggleMenu = () => {
         setIsOpen(!isOpen);
