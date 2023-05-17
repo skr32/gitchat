@@ -16,11 +16,13 @@ const io = require('socket.io')(server, {
 app.use(cors());
 server.listen(port, () => console.log(`Listening on port ${port}`));
 
-
+const bodyParser = require("body-parser");
 app.use('/static', express.static('node_modules'));
 
 
+app.use(bodyParser.json());
 app.use("/api/misc", require("./routes/misc"));
+app.use("/api/users", require("./routes/users"));
 
 const mongoose = require('mongoose');
 mongoose
