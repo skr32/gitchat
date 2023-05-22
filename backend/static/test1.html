@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login/Register Test</title>
+</head>
+<body>
+    <h1>Login or Register</h1>
+    
+    <!-- Login form -->
+    <form id="login-form">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        
+        <button type="submit">Login</button>
+    </form>
+    
+    <!-- Register form -->
+    <form id="register-form">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        
+        <button type="submit">Register</button>
+    </form>
+    
+    <!-- Response message area -->
+    <div id="response"></div>
+    
+    <!-- JS script to handle form submission -->
+    <script>
+      const loginForm = document.getElementById('login-form');
+      const registerForm = document.getElementById('register-form');
+      const responseDiv = document.getElementById('response');
+      
+      loginForm.addEventListener('submit', (event) => {
+          event.preventDefault();
+          
+          // Get user inputs
+          const username = loginForm.username.value;
+          const password = loginForm.password.value;
+          
+          // Make login request
+          fetch('/api/users/login', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ username, password })
+          })
+          .then(response => response.json())
+          .then(data => {
+              responseDiv.textContent = JSON.stringify(data, null, 2);
+          })
+          .catch(error => console.error(error));
+      });
+      
+      registerForm.addEventListener('submit', (event) => {
+          event.preventDefault();
+          
+          // Get user inputs
+          const username = registerForm.username.value;
+          const password = registerForm.password.value;
+          
+          // Make register request
+          fetch('/api/users/register', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ username, password })
+          })
+          .then(response => response.json())
+          .then(data => {
+              responseDiv.textContent = JSON.stringify(data, null, 2);
+          })
+          .catch(error => console.error(error));
+      });
+    </script>
+</body>
+</html>

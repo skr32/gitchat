@@ -1,14 +1,15 @@
-const router = require('express').Router();
+import express from 'express';
 
-router.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
-    //res.send('Hello World!');
-    }
-);
+//fancy way of getting the current directory name in ES6
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+const router = express.Router();
 
 router.get('/health', (req, res) => {
     res.send('OK');
     }
 );
 
-module.exports = router;
+export default router;
