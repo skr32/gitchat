@@ -32,6 +32,7 @@ export function ChatBar() {
             }}>
                 <div className='sidebar' style={{
                     minWidth: isOpen ? '300px' : '0',
+                    opacity: isOpen ? '1' : '0',
                     transform: !isOpen ? 'translateX(-500px)' : 'translateX(0)',
                     transition: 'all 0.5s ease',
                 }}>
