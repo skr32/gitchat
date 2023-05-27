@@ -40,6 +40,16 @@ app.get('/profile2', function(req, res) {
 
 });
 
+import { verifyUser } from './misc.js';
+function isAuthenticated(req, res, next) {
+  // Check if user is authenticated
+  if (!verifyUser(req.headers.authorization) && req.url != '/login' && req.url != '/api/users/login') {
+    res.redirect('/login');
+  }
+  return next();
+}
+
+app.use(isAuthenticated);
 
 import miscRoute from './routes/misc.js';
 import userRoute from './routes/users.js';
@@ -54,11 +64,18 @@ app.use("/api/messages", messageRoute);
 //fancy way of getting the current directory name in ES6
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { verify } from 'crypto';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 app.get('/test1', function(req, res){
   res.sendFile(__dirname + '/static/test1.html');
 });
 app.get('/test2', function(req, res){
+  res.sendFile(__dirname + '/static/test2.html');
+});
+app.get('/login', function(req, res){
+  res.sendFile(__dirname + '/static/login.html');
+});
+app.get('/', function(req, res){
   res.sendFile(__dirname + '/static/test2.html');
 });
   
