@@ -30,8 +30,9 @@ router.post('/login', (req, res) => {
                 console.log(user);
                 const payload = {
                     id: user.id,
-                    name: user.name,
+                    name: user.username,
                 };
+                console.log(payload);
                 // Sign token
                 jwt.sign(
                     payload,

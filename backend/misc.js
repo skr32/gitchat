@@ -8,6 +8,12 @@ export function getUserIdFromBearerToken(bearerToken) {
   return decoded.id;
 }
 
+export function getUsernameFromBearerToken(bearerToken) {
+  const token = bearerToken.split(' ')[1];
+  const decoded = jwt.verify(token, jwt_secret);
+  return decoded.name;
+}
+
 export function verifyUser(bearerToken) {
   try {
     const token = bearerToken.split(' ')[1];
