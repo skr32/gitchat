@@ -28,12 +28,19 @@ export function LogIn() {
   
             <div className="join-container__inner">
                 <h2>Log In<img src={logo} alt="logo" /></h2>
-                <input placeholder="Username" type="text"
+                <span>
+                <input type="text"
                     onChange={(event) => setName(event.target.value)}
                 ></input>
-                <input placeholder="Password" type="password"
+                <label>Username</label>
+                </span>
+                <br/>
+                <span>
+                <input type="password"
                     onChange={(event) => setRoom(event.target.value)}
                 ></input>
+                <label>Password</label>
+                </span>
                 <BrowserRouter>
                     <Link onClick={(event) => (!name || !room) ? event.preventDefault() : null} to={`/chat?name=${name}&room=${room}`}>
                         <SvgButton text={'Log In'} />
@@ -42,12 +49,19 @@ export function LogIn() {
             </div>
             <div className="join-container__inner">
                 <h2><img src={logo} alt="logo" /> Sign Up</h2>
-                <input placeholder="Username" type="text"
+                <span>
+                <input type="text"
                     onChange={(event) => setName(event.target.value)}
                 ></input>
-                <input placeholder="Password" type="password"
+                <label>Username</label>
+                </span>
+                <br/>
+                <span>
+                <input type="password"
                     onChange={(event) => setRoom(event.target.value)}
                 ></input>
+                <label>Password</label>
+                </span>
                 <BrowserRouter>
                     <Link onClick={(event) => (!name || !room) ? event.preventDefault() : null} to={`/chat?name=${name}&room=${room}`}>
                         <SvgButton text={'Sign Up'} />

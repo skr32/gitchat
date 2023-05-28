@@ -32,14 +32,33 @@
             height:30px;
             margin-left:25px;
         }
+        span{
+            position: relative;
+        }
         input[type="text"], [type="password"]{
             padding: 12px 20px;
             margin: 8px 0;
             display: inline-block;
             border: 1px solid #ccc;
             border-radius: 4px;
-            box-sizing: border-box;
         }
+        label {
+            position: absolute;
+            top:0;
+            left: 0;
+            padding: 1.2rem;
+            font-size: 0.9rem;
+            color: grey;
+            pointer-events: none;
+            transition: .3s;
+          }
+        input:focus ~ label {
+            top: -2.2rem;
+            left: 0;
+            color: var(--secondary-color);
+            font-size: 0.8rem;
+            font-weight:bold;
+          }
     }
 }
 .overlay_container {
