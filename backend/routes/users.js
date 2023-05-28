@@ -3,6 +3,7 @@ import isEmpty from 'is-empty';
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import { jwt_secret } from '../config.js';
+import bcrypt from 'bcrypt'
 
 const router = express.Router();
 
@@ -26,12 +27,13 @@ router.post('/login', (req, res) => {
                 return res.status(404).json({ usernotfound: "User not found" });
             }
 
-            if (user.password === _password) {
+            if (bcrypt.compareSync(_password, user.password)) {
                 console.log(user);
                 const payload = {
                     id: user.id,
-                    name: user.name,
+                    name: user.username,
                 };
+                console.log(payload);
                 // Sign token
                 jwt.sign(
                     payload,
@@ -64,17 +66,21 @@ router.post('/login', (req, res) => {
 router.post('/register', (req, res) => {
     const _username = !isEmpty(req.body.username) ? req.body.username : '';
     const _password = !isEmpty(req.body.password) ? req.body.password : '';
-    console.log(_username);
-    console.log(_password)
 
+    //pwd hashing
+    bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(_password, salt, (err, hash) => {
+            if (err) throw err;
 
-    const newUser = new User({
-        username: _username,
-        password: _password,
+            const newUser = new User({
+                username: _username,
+                password: hash
+            });
+            newUser.save()
+                .then(user => res.json(user))
+                .catch(err => res.status(400).json({ username: "Username already exists" }));
+        });
     });
-    newUser.save()
-        .then(user => res.json(user))
-        .catch(err => res.status(400).json({ username: "Username already exists" }));
     //curl --insecure -XPOST -H "Content-type: application/json" -d '{"username":"1User","password":"1PW4User"}' 'http://localhost:5000/api/users/register'
 
 });
@@ -93,14 +99,14 @@ router.get('/allusers', (req, res) => {
 
 
 
-    /* const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
-    }
-    
-    curl --insecure -XPOST -H "Content-type: application/json" -d ''{"username":"1User","password":"1PW4User"}'' 'http://localhost:5000/login'
-    
-     */
+/* const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username, password }),
+}
+ 
+curl --insecure -XPOST -H "Content-type: application/json" -d ''{"username":"1User","password":"1PW4User"}'' 'http://localhost:5000/login'
+ 
+ */
 
-    export default router;
+export default router;
