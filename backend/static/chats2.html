@@ -1,0 +1,126 @@
+/*
+    html that contains embedded js
+    the page is a overview of all the threads of a user
+    the user can click on a thread to go to the chat page
+    the chat uses websockets to update the chat in real time
+    the user can also create a new thread
+    the user can also logout
+*/
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Chat App - Threads Overview</title>
+  </head>
+  <body>
+    <h1>Welcome, User!</h1>
+
+    <div id="threads">
+      <!-- This list will be populated dynamically using JS -->
+    </div>
+
+    <div id="chat" style="display: none;">
+      <h2 id="chat-title"></h2>
+      <ul id="messages"></ul>
+      <form id="new-message-form">
+        <input type="text" id="message-input" placeholder="Type your message here...">
+        <button type="submit">Send</button>
+      </form>
+      <button id="back-btn">Back to Threads</button>
+    </div>
+
+    <script>
+      // Your JavaScript code goes here
+      
+      // WebSocket client for receiving real-time messages
+      const ws = new WebSocket(`ws://${window.location.host}/api/chat`);
+
+      // Populate the threads list
+      fetch('/api/threads/allthreads', {
+            headers: {
+              'Authorization': `${token}` // add the Authorization header with token
+            }
+          })
+        .then(response => response.json())
+        .then(threads => {
+          const threadsDiv = document.querySelector('#threads');
+          threads.forEach(thread => {
+            const threadEl = document.createElement('li');
+            threadEl.textContent = thread.name;
+            threadEl.addEventListener('click', () => startChat(thread));
+            threadsDiv.appendChild(threadEl);
+          });
+        });
+
+      // Show the chat window and load messages for the selected thread
+      function startChat(thread) {
+        // Hide the threads list and show the chat window
+        document.querySelector('#threads').style.display = 'none';
+        document.querySelector('#chat').style.display = 'block';
+
+        // Set the chat title to the selected thread name
+        document.querySelector('#chat-title').textContent = `Chatting with ${thread.name}`;
+
+        const token = localStorage.getItem('token'); // retrieve JWT token from localStorage
+        // Load the initial messages for the thread
+        /* fetch(`/api/chat/${thread.id}`, {
+            headers: {
+              'Authorization': `${token}` // add the Authorization header with token
+            }
+          })
+          .then(response => response.json())
+          .then(messages => {
+            const messagesList = document.querySelector('#messages');
+            messages.forEach(message => {
+              const messageEl = document.createElement('li');
+              messageEl.textContent = `${message.author}: ${message.text}`;
+              messagesList.appendChild(messageEl);
+            });
+          }); */
+
+        // Handle form submission for sending a new message
+        const newMessageForm = document.querySelector('#new-message-form');
+        const messageInput = document.querySelector('#message-input');
+        newMessageForm.addEventListener('submit', event => {
+          event.preventDefault(); // Prevent the default form submission behavior
+
+          const author = 'User'; // TODO: Replace with actual user ID
+          const text = messageInput.value;
+          const timestamp = Date.now();
+
+          // Send a WebSocket message to the server with the new message data
+          ws.send(JSON.stringify({ threadId: thread.id, author, text, timestamp }));
+
+          // Add the new message to the messages list
+          const newMessageEl = document.createElement('li');
+          newMessageEl.textContent = `${author}: ${text}`;
+          document.querySelector('#messages').appendChild(newMessageEl);
+
+          // Reset the form input
+          messageInput.value = '';
+        })
+
+        // Handle back button click
+        const backBtn = document.querySelector('#back-btn');
+        backBtn.addEventListener('click', () => {
+          // Hide the chat window and show the threads list
+          document.querySelector('#threads').style.display = 'block';
+          document.querySelector('#chat').style.display = 'none';
+
+          // Clear the messages list
+          document.querySelector('#messages').innerHTML = '';
+        });
+      }
+
+      // Receive WebSocket messages and add them to the messages list
+      ws.addEventListener('message', event => {
+        const message = JSON.parse(event.data);
+        if (message.type === 'new-message') {
+          const messageEl = document.createElement('li');
+          messageEl.textContent = `${message.author}: ${message.text}`;
+          document.querySelector('#messages').appendChild(messageEl);
+        }
+      });
+    </script>
+  </body>
+</html>

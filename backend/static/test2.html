@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Create New Thread</title>
+</head>
+
+<body>
+    <h1>Create New Thread</h1>
+
+    <p>Select users to add to the thread:</p>
+    <ul id="user-list"></ul>
+    <input type="text" id="jwt-token">
+    <button onclick="createThread()">Create Thread</button>
+
+    <script>
+        // Fetch all users from the API
+        fetch('/api/users/allusers')
+            .then(response => response.json())
+            .then(users => {
+                const userList = document.getElementById('user-list');
+
+                // Display each user as a checkbox in a list
+                for (let user of users) {
+                    const listItem = document.createElement('li');
+                    listItem.innerHTML = `
+                        <label>
+                            <input type="checkbox" name="users[]" value="${user._id}">
+                            ${user.username}
+                        </label>
+                    `;
+                    userList.appendChild(listItem);
+                }
+            })
+            .catch(error => console.error(error));
+
+        function createThread() {
+            const selectedUsers = Array.from(document.querySelectorAll('input[name="users[]"]:checked'))
+                .map(input => input.value);
+
+            if (selectedUsers.length === 0) {
+                alert('Please select at least one user.');
+                return;
+            }
+
+            // Retrieve the JWT token from the input field
+            const token = document.getElementById('jwt-token').value;
+
+            // POST the selected users to the API to create a new thread with JWT authorization
+            fetch('/api/threads/newthread', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}` // Add the Authorization header with the token
+                },
+                body: JSON.stringify({ members: selectedUsers.map(id => ({ _id: id })) })
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Thread created successfully.');
+                        window.location.href = '/test2'; // Redirect to thread list
+                    } else {
+                        response.json().then(data => alert(`Error: ${data.message}`));
+                    }
+                })
+                .catch(error => console.error(error));
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>List of Threads</title>
+    <style>
+        #chat-window {
+            display: none;
+            width: 400px;
+            height: 300px;
+            border: 1px solid black;
+            padding: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>List of Threads</h1>
+    <ul id="threads-list"></ul>
+
+    <div id="chat-window">
+        <h2>Chat Window</h2>
+        <ul id="messages"></ul>
+        <form>
+            <input type="text" id="message-input">
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
+    
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script>
+        // Connect to Socket.IO server
+        const socket = io();
+
+                            // Listen for incoming messages
+                            socket.on('newMessage', message => {
+                        // Add new message to UI
+                        const messagesList = document.getElementById('messages');
+                        const li = document.createElement('li');
+                        li.textContent = `${message.from}: ${message.message}`;
+                        messagesList.appendChild(li);
+                    });
+
+        // Retrieve JWT token from localStorage
+        const token = localStorage.getItem('token');
+
+        // Call API to retrieve list of threads
+        fetch('/api/threads/allthreads', {
+            headers: {
+                'Authorization': `${token}`
+            }
+        })
+        .then(response => response.json())
+        .then(threads => {
+            // Populate list of threads in UI
+            const threadsList = document.getElementById('threads-list');
+            for (let thread of threads) {
+                const li = document.createElement('li');
+                li.textContent = thread._id + ": " + thread.members.join(', ');
+                li.setAttribute('data-thread-id', thread._id);
+                threadsList.appendChild(li);
+
+                // Add event listener to each list item to show chat window when clicked
+                li.addEventListener('click', e => {
+                    const threadId = e.target.getAttribute('data-thread-id');
+                    const chatWindow = document.getElementById('chat-window');
+
+                    // Join selected thread room
+                    socket.emit('subscribe', threadId);
+
+
+                    // Show chat window
+                    chatWindow.style.display = 'block';
+
+                    // Prevent form submission and send message to server on button click
+                    const form = document.querySelector('#chat-window form');
+                    form.addEventListener('submit', e => {
+                        e.preventDefault();
+                        const input = document.getElementById('message-input');
+                        const message = input.value;
+                        input.value = '';
+                        
+                        fetch('/api/messages/newmessage', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `${token}`
+                            },
+                            body: JSON.stringify({
+                                thread: threadId,   
+                                message: message
+                            })
+                        })
+
+                    });
+                });
+            }
+        })
+        .catch(error => console.error(error));
+    </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Threads</title>
+</head>
+<body>
+    <h1>My Threads</h1>
+
+    <ul id="thread-list"></ul>
+
+    <script>
+        // Fetch the current user from the API
+        fetch('/api/users/current')
+            .then(response => response.json())
+            .then(user => {
+                // Fetch all threads involving the current user from the API
+                return fetch(`/api/threads?userId=${user._id}`);
+            })
+            .then(response => response.json())
+            .then(threads => {
+                const threadList = document.getElementById('thread-list');
+
+                // Display each thread as a link in a list
+                for (let thread of threads) {
+                    const listItem = document.createElement('li');
+                    listItem.innerHTML = `
+                        <a href="/threads/${thread._id}">
+                            ${thread.members.map(member => member.username).join(', ')}
+                        </a>
+                    `;
+                    threadList.appendChild(listItem);
+                }
+            })
+            .catch(error => console.error(error));
+    </script>
+</body>
+</html>
