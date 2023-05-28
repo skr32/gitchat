@@ -40,6 +40,15 @@ app.get('/profile2', function(req, res) {
 
 });
 
+//output all requests
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  console.log(`Headers: ${JSON.stringify(req.headers)}`);
+  console.log(`Body: ${JSON.stringify(req.body)}`);
+  console.log();
+  next();
+});
+
 import { verifyUser } from './misc.js';
 function isAuthenticated(req, res, next) {
   // Check if user is authenticated
@@ -49,7 +58,27 @@ function isAuthenticated(req, res, next) {
   return next();
 }
 
-app.use(isAuthenticated);
+app.use(function (req, res, next) {
+	req.io = io;
+	next();
+});
+
+io.on('connection', socket => {
+  console.log(socket.rooms)
+  socket.on('subscribe',function(room){  
+    try{
+      console.log('[socket]','join room :',room)
+      socket.join(room);
+      socket.to(room).emit('user joined', socket.id);
+    }catch(e){
+      console.log('[error]','join room :',e);
+      socket.emit('error','couldnt perform requested action');
+    }
+  })
+  
+})
+
+//app.use(isAuthenticated);
 
 import miscRoute from './routes/misc.js';
 import userRoute from './routes/users.js';
@@ -74,6 +103,9 @@ app.get('/test2', function(req, res){
 });
 app.get('/login', function(req, res){
   res.sendFile(__dirname + '/static/login.html');
+});
+app.get('/chats', function(req, res){
+  res.sendFile(__dirname + '/static/chats.html');
 });
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/static/test2.html');

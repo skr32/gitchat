@@ -31,6 +31,15 @@ router.post('/newthread', (req, res) => {
 }
 );
 
+//get list of all threads of a user
+router.get('/allthreads', (req, res) => {
+    const requestID = getUserIdFromBearerToken(req.headers.authorization);
+    console.log("requestFrom: " + requestID);
+    Thread.find({members: requestID}).select('_id members') // select only username and id fields
+        .then(threads => res.json(threads))
+        .catch(err => res.status(400).json({ threads: "No threads found" }));
+});
+
 
 
 
