@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Page</title>
+</head>
+<body>
+    <h1>Login Page</h1>
+
+    <form onsubmit="login(event)">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="submit">Login</button>
+    </form>
+
+    <script>
+        function login(event) {
+            event.preventDefault();
+
+            // Get the username and password from the form
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Call the login API endpoint with the given credentials
+            fetch('/api/users/login', {
+                method: 'POST',
+                body: JSON.stringify({ username, password }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Store the bearer token in a cookie
+                //console.log(data);
+                localStorage.setItem('token', data.token);
+
+                // Redirect to the dashboard page
+                //window.location.href = '/test2';
+            })
+            .catch(error => console.error(error));
+        }
+    </script>
+</body>
+</html>
