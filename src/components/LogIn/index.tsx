@@ -10,16 +10,9 @@ export function LogIn() {
     const [name, setName] = useState('');
     const [room, setRoom] = useState('');
     const [login, setLogin] = useState(false);
-    const [signUp, setSignUp] = useState(true);
 
     const toggle = () => {
-        if (login === true) {
-            setLogin(false);
-            setSignUp(true);
-        } else if (signUp === true) {
-            setLogin(true);
-            setSignUp(false);
-        }
+        login ? setLogin(false) : setLogin(true);
     }
 
     return (
@@ -81,7 +74,7 @@ export function LogIn() {
                     <button onClick={toggle}>Sign up</button>
                 </div>
                 <div className="join-container__inner overlay" style={{
-                    transform: !signUp ? 'translateX(-100%)' : 'translateX(0)',
+                    transform: login ? 'translateX(-100%)' : 'translateX(0)',
                     opacity: !login ? '0' : '1',
                     zIndex: !login ? '0' : '1',
                 }}>
