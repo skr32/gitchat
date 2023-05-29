@@ -72,11 +72,27 @@ io.on('connection', socket => {
       socket.to(room).emit('user joined', socket.id);
     }catch(e){
       console.log('[error]','join room :',e);
-      socket.emit('error','couldnt perform requested action');
     }
   })
-  
-})
+  socket.on('unsubscribe',function(room){
+    try{
+      console.log('[socket]','leave room :',room)
+      socket.leave(room);
+      socket.to(room).emit('user left', socket.id);
+    }catch(e){
+      console.log('[error]','leave room :',e);
+    }
+  })
+  socket.on('unsubscribeAll',function(){
+    try{
+      console.log('[socket]','leave all rooms')
+      socket.leaveAll();
+      socket.to(room).emit('user left', socket.id);
+    }catch(e){
+      console.log('[error]','leave all rooms :',e);
+    }
+  })
+});
 
 //app.use(isAuthenticated);
 

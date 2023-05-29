@@ -5,6 +5,10 @@ import express from 'express';
 
 import passport from '../passport.js';
 import { getUserIdFromBearerToken } from '../misc.js';
+import mongoose from 'mongoose';
+
+
+const ObjectId = mongoose.Types.ObjectId;
 
 const router = express.Router();
 
@@ -35,9 +39,27 @@ router.post('/newthread', (req, res) => {
 router.get('/allthreads', (req, res) => {
     const requestID = getUserIdFromBearerToken(req.headers.authorization);
     console.log("requestFrom: " + requestID);
-    Thread.find({members: requestID}).select('_id members') // select only username and id fields
-        .then(threads => res.json(threads))
-        .catch(err => res.status(400).json({ threads: "No threads found" }));
+    Thread.aggregate([
+      {
+        '$match': {
+          'members': new ObjectId(requestID)
+        }
+      }, {
+        '$lookup': {
+          'from': 'users', 
+          'localField': 'members', 
+          'foreignField': '_id', 
+          'as': 'members'
+        }
+      }, {
+        '$project': {
+          '_id': 1, 
+          'members': '$members.username'
+        }
+      }
+    ])
+    .then(threads => res.json(threads))
+    .catch(err => res.status(400).json({ threads: "No threads found" }));
 });
 
 

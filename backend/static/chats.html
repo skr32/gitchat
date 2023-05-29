@@ -51,9 +51,9 @@
 
         function addMessage(message) {
             const li = document.createElement('li');
-            li.textContent = `[${new Date(message.date).toLocaleTimeString([], {hour: 'numeric', minute:'numeric'}) }]  ${message.fromUsername}: ${message.message}`;
+            li.textContent = `[${new Date(message.date).toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' })}]  ${message.fromUsername}: ${message.message}`;
             messagesList.appendChild(li);
-            
+
             // Scroll to bottom of message list
             messagesList.scrollTop = messagesList.scrollHeight;
         }
@@ -87,15 +87,27 @@
                     li.setAttribute('data-thread-id', thread._id);
                     threadsList.appendChild(li);
 
+
                     // Add event listener to each list item to show chat window when clicked
                     li.addEventListener('click', e => {
-                        const threadId = e.target.getAttribute('data-thread-id');
+                        e.preventDefault();
+                        let threadId = e.target.getAttribute('data-thread-id');
+                        document.getElementById('chat-window').setAttribute('data-current-thread-id', threadId);
+                        showChatByThreadId(threadId);
+                    });
+
+                    // Prevent form submission and send message to server on button click
+                    const form = document.querySelector('#chat-window form');
+
+                    function showChatByThreadId(threadId) {
+                        console.log("showChatByThreadId:" + threadId)
                         const chatWindow = document.getElementById('chat-window');
 
                         // Clear existing messages from previous thread
                         messagesList.innerHTML = '';
 
                         // Join selected thread room
+                        socket.emit('unsubscribeAll');
                         socket.emit('subscribe', threadId);
 
                         //fetch all old messages from the thread
@@ -105,7 +117,7 @@
                             }
                         })
                             .then(response => response.json())
-                            .then(messages => {messages.forEach(message => addMessage(message))})
+                            .then(messages => { messages.forEach(message => addMessage(message)) })
                             .then(() => {
                                 // Scroll to bottom of message list
                                 messagesList.scrollTop = messagesList.scrollHeight;
@@ -114,35 +126,37 @@
 
                         // Show chat window
                         chatWindow.style.display = 'block';
+                    }
 
-
-                        // Prevent form submission and send message to server on button click
-                        const form = document.querySelector('#chat-window form');
-                        form.addEventListener('submit', e => {
-                            e.preventDefault();
-                            const input = document.getElementById('message-input');
-                            const message = input.value;
-                            input.value = '';
-
-                            if (message === '') {
-                                return;
-                            }
-
-                            fetch('/api/messages/newmessage', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'Authorization': `${token}`
-                                },
-                                body: JSON.stringify({
-                                    thread: threadId,
-                                    message: message
-                                })
-                            })
-
-                        });
-                    });
                 }
+
+                function handleSubmit(e) {
+                    e.preventDefault();
+                    const threadId = document.getElementById('chat-window').getAttribute('data-current-thread-id');
+                    const input = document.getElementById('message-input');
+                    const message = input.value;
+                    input.value = '';
+
+                    if (message === '') {
+                        return;
+                    }
+
+                    console.log(threadId)
+
+                    fetch('/api/messages/newmessage', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `${token}`
+                        },
+                        body: JSON.stringify({
+                            thread: threadId,
+                            message: message
+                        })
+                    })
+                };
+                const form = document.querySelector('#chat-window form');
+                form.addEventListener('submit', handleSubmit);
             })
             .catch(error => console.error(error));
 
