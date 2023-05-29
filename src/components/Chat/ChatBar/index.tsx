@@ -2,6 +2,7 @@ import './style.scss'
 import { useState } from 'react'
 import logo from '../../../assets/chatLogo.png'
 import { ChatPreview } from './ChatPreview';
+import { Settings } from './Settings';
 
 export function ChatBar() {
     const [isOpen, setIsOpen] = useState(true);
@@ -42,7 +43,7 @@ export function ChatBar() {
                             <h2>CodeChat<img src={logo} alt="logo" /></h2>
                         </span>
                         <div className='sidebar__upper'>
-                            <h2>Inbox</h2>
+                            <h2>Inbox &nbsp;<Settings /> </h2>
                             <input type="text" placeholder='Search Chats...'></input>
                         </div>
                     </div>
