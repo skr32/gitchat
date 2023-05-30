@@ -5,9 +5,10 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    background-color: var(--background-color);
+    background-color: var(--contrast-color);
     cursor: pointer;
     margin:5px 0;
+    border-top: 1px #101010 solid;
 
     img {
         height: 30px;
