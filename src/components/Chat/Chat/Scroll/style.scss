@@ -1,0 +1,24 @@
+.button-pagetop {
+  position:absolute;
+  z-index: 99;
+  border: none;
+  outline: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 10px;
+  font-size: 18px;
+  bottom: 0.7rem;
+  right: 0.7rem;
+  height: 3rem;
+  width: 3rem;
+  fill: var(--primary-color);
+  opacity: 0.0;
+  transform: scaleX(0) scaleY(0);
+  
+}
+
+.button-pagetop:hover {
+  opacity: 1;
+  transition: 0.3s;
+}
+

@@ -1,9 +1,11 @@
 import './style.scss'
 import logo from '../../../assets/chatLogo.png'
 import { Message } from './Message'
+import { Scroll } from './Scroll'
+import { useRef } from 'react';
 
 export function Chat( { expanded }:any ) {
-
+    const containerRef = useRef(null);
     return (
         <>
             <div className='chat-container' style={{ width: !expanded ? '80%' : '100%' }}>
@@ -21,8 +23,9 @@ export function Chat( { expanded }:any ) {
                     </span>
                 </div>
                 {/* messages left and right  */}
-                <div className='message-container'>
+                <div className='message-container' ref={containerRef}>
                     <Message />
+                    <Scroll containerRef={containerRef} />
                 </div>
                 {/* input type text ; send button */}
                 <div className='input'>
