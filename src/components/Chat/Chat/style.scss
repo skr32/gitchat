@@ -40,7 +40,7 @@
     input[type="button"] {
       display: inline-block;
       padding: 10px 15px;
-      background-color: #d4af37;
+      background-color: var(--primary-color);
       font-size: 1rem;
       border: 2px;
       border-radius: 5px;
@@ -48,7 +48,7 @@
       margin-left: 10px;
   
       &:hover {
-        background-color: #c49e31;
+        filter: saturate(3.0);
       }
     }
   }
