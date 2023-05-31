@@ -38,7 +38,7 @@ export function Message() {
     })
         .then(response => response.json())
         .then(messages => {
-            const newMessages = messages.map(message => {
+            const newMessages = messages.map((message: { fromUsername: string; message: string; date: Date; }) => {
               const isCurrentUser = decodedToken.name === message.fromUsername;
               return {
                 name: isCurrentUser ? 'true' : 'false',
