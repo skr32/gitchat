@@ -9,7 +9,7 @@
 }
 
 .message {
-    max-width: 40%;
+    max-width: 50%;
     width: min-content;
     background-color: var(--contrast-color);
     padding: 15px;
@@ -27,4 +27,9 @@
 .left-corner {
     align-self: flex-start;
     margin-left: 15px;
+}
+
+.message-timestamp{
+    display: flex;
+    justify-content: right;
 }
