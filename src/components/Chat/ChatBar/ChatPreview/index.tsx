@@ -28,9 +28,7 @@ export function ChatPreview() {
             }
             chats.push(newThread);
             setLoading(false);
-            console.log(newThread);
         }
-        console.log(chats.length);
       });
   }, []);
   if (loading) {

@@ -30,7 +30,6 @@ export function LogIn() {
             alert('Please fill in all fields');
             return;
         }
-        console.log(loginName, loginPassword)
         fetch('http://localhost:5000/api/users/login', {
             method: 'POST',
             body: JSON.stringify({
@@ -44,7 +43,6 @@ export function LogIn() {
             .then(response => response.json())
             .then(data => {
                 localStorage.setItem('token', data.token);
-                console.log(data.token)
                 window.location.href = '/chats';
             })
             .catch(error => console.error(error));
@@ -56,7 +54,6 @@ export function LogIn() {
             alert('Please fill in all fields');
             return;
         }
-        console.log(signupName, signupPassword)
         fetch('http://localhost:5000/api/users/register', {
             method: 'POST',
             body: JSON.stringify({
@@ -70,7 +67,6 @@ export function LogIn() {
             .then(response => response.json())
             .then(data => {
                 localStorage.setItem('token', data.token);
-                console.log(data.token)
                 window.location.href = '/chats';
             })
             .catch(error => console.error(error));

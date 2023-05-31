@@ -20,10 +20,8 @@ export function Message() {
         return JSON.parse(jsonPayload);
     }
     const decodedToken = parseJwt(token);
-    console.log(decodedToken.name);
 
     useEffect(() => {
-        console.log(returnedThreadId);
       }, [returnedThreadId]);
       setTimeout(() => console.log(returnedThreadId), 3000)
     useEffect(() => {
