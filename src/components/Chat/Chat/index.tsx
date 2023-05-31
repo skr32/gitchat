@@ -59,6 +59,12 @@ export function Chat({ expanded }: any) {
             setMessage("");
         };
 
+        const handleKeyDown = (event: any) => {
+            if (event.key === "Enter") {
+                sendNewMessage();
+            }
+        };
+
         return (
             <div className="input">
                 <input
@@ -66,6 +72,7 @@ export function Chat({ expanded }: any) {
                     value={message}
                     placeholder="Type Message..."
                     onChange={handleNewMessageChange}
+                    onKeyDown={handleKeyDown}
                 ></input>
                 <input type="button" value="Send" onClick={sendNewMessage}></input>
             </div>
