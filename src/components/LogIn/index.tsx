@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { BrowserRouter, Link } from 'react-router-dom';
 import './style.scss';
 import logo from '../../assets/chatLogo.png';
 import { SvgButton } from '../SvgButton';
@@ -24,6 +23,59 @@ export function LogIn() {
     const isFocused = (inputName: any) => {
         return focusedInput === inputName;
     };
+
+    function handleLogin(event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+        if (!loginName || !loginPassword) {
+            alert('Please fill in all fields');
+            return;
+        }
+        console.log(loginName, loginPassword)
+        fetch('http://localhost:5000/api/users/login', {
+            method: 'POST',
+            body: JSON.stringify({
+                username: loginName,
+                password: loginPassword
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                localStorage.setItem('token', data.token);
+                console.log(data.token)
+                window.location.href = '/chats';
+            })
+            .catch(error => console.error(error));
+    }
+
+    function handleSignup(event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+        if (!signupName || !signupPassword) {
+            alert('Please fill in all fields');
+            return;
+        }
+        console.log(signupName, signupPassword)
+        fetch('http://localhost:5000/api/users/register', {
+            method: 'POST',
+            body: JSON.stringify({
+                username: signupName,
+                password: signupPassword
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                localStorage.setItem('token', data.token);
+                console.log(data.token)
+                window.location.href = '/chats';
+            })
+            .catch(error => console.error(error));
+    }
+
 
     return (
         <>
@@ -65,16 +117,8 @@ export function LogIn() {
                             Password
                         </label>
                     </span>
-                    <BrowserRouter>
-                        <Link
-                            onClick={(event) =>
-                                (!loginName || !loginPassword) && event.preventDefault()
-                            }
-                            to={`/chat?name=${loginName}&password=${loginPassword}`}
-                        >
-                            <SvgButton text={'Log In'} />
-                        </Link>
-                    </BrowserRouter>
+                    <SvgButton text={'Log In'} click={handleLogin} />
+
                 </div>
                 <div className="join-container__inner">
                     <h2>
@@ -113,16 +157,9 @@ export function LogIn() {
                             Password
                         </label>
                     </span>
-                    <BrowserRouter>
-                        <Link
-                            onClick={(event) =>
-                                (!signupName || !signupPassword) && event.preventDefault()
-                            }
-                            to={`/chat?name=${signupName}&password=${signupPassword}`}
-                        >
-                            <SvgButton text={'Sign Up'} />
-                        </Link>
-                    </BrowserRouter>
+
+                    <SvgButton text={'Sign Up'} click={handleSignup} />
+
                 </div>
             </div>
             <div className="overlay_container">

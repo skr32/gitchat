@@ -12,28 +12,30 @@ export function ChatPreview() {
     const [loading, setLoading] = useState(true);
     const [chats, setChats] = useState<{ name: string; message: string }[]>([]);
 
-    useEffect(() => {
-        const token = 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NzcyYzk0MmM0MDhjNGI5MzRmYWU1OSIsIm5hbWUiOiJ0ZXN0IiwiaWF0IjoxNjg1NTMxODEzLCJleHAiOjE3MTcwODg3Mzl9.mCre5BG5C5psHn7Eqe3W1F3IPSLam2os8Jrv7B66HDo';
-        fetch('http://localhost:5000/api/threads/allthreads', {
-            headers: {
-                'Authorization': `${token}`
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    fetch('http://localhost:5000/api/threads/allthreads', {
+      headers: {
+        'Authorization': `${token}`
+      }
+    })
+      .then(response => response.json())
+      .then(threads => {
+        for(let thread of threads) {
+            const newThread: {name:string, message:string } = { 
+                name: thread._id,
+                message: thread._id,
             }
-        })
-            .then(response => response.json())
-            .then(threads => {
-                for (let thread of threads) {
-                    const newThread: { name: string, message: string } = {
-                        name: thread._id,
-                        message: thread._id,
-                    }
-                    chats.push(newThread);
-                    setLoading(false);
-                }
-            });
-    }, []);
-    if (loading) {
-        return <div>Loading...</div>;
-    }
+            chats.push(newThread);
+            setLoading(false);
+            console.log(newThread);
+        }
+        console.log(chats.length);
+      });
+  }, []);
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
     return (
         <div>
