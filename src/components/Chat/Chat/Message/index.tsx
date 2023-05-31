@@ -27,9 +27,10 @@ export function Message() {
     useEffect(() => {
         // to do: make threadId dynamic
     //   const token = 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NzcyYzk0MmM0MDhjNGI5MzRmYWU1OSIsIm5hbWUiOiJ0ZXN0IiwiaWF0IjoxNjg1NTMxODEzLCJleHAiOjE3MTcwODg3Mzl9.mCre5BG5C5psHn7Eqe3W1F3IPSLam2os8Jrv7B66HDo';
-    //   const token = localStorage.getItem('token');
-    //   fetch('http://localhost:5000/api/messages/allmessages?thread=' + returnedThreadId, {
-      fetch('http://localhost:5000/api/messages/allmessages?thread=64772ee52c408c4b934fae68', {
+      const token = localStorage.getItem('token');
+      console.log(returnedThreadId);
+    //  fetch('http://localhost:5000/api/messages/allmessages?thread=' + returnedThreadId, {
+      fetch('http://localhost:5000/api/messages/allmessages?thread=64779063ade42ab9cb3b1fe1', {
         headers: {
             'Authorization': `${token}`
         }
