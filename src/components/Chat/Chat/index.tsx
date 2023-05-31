@@ -2,7 +2,23 @@ import './style.scss'
 import logo from '../../../assets/chatLogo.png'
 import { Message } from './Message'
 
-export function Chat( { expanded }:any ) {
+export function Chat({ expanded }: any) {
+    // to do: add library
+    // hacky way to decode JWT token. Pleeeaase don't do this in production! Use a library instead!!
+
+    // const token = localStorage.getItem('token');
+    const token = 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NzcyYzk0MmM0MDhjNGI5MzRmYWU1OSIsIm5hbWUiOiJ0ZXN0IiwiaWF0IjoxNjg1NTMxODEzLCJleHAiOjE3MTcwODg3Mzl9.mCre5BG5C5psHn7Eqe3W1F3IPSLam2os8Jrv7B66HDo';
+    const decodedToken = parseJwt(token);
+    // console.log(decodedToken);
+    function parseJwt(token) {
+        var base64Url = token.split('.')[1];
+        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+
+        return JSON.parse(jsonPayload);
+    }
 
     return (
         <>
@@ -13,7 +29,7 @@ export function Chat( { expanded }:any ) {
                         <img src={logo}></img>
                     </span>
                     <span>
-                        <p>Testname Testtest</p>
+                        <p>{decodedToken.name}</p>
                     </span>
                     <span>
                         {/* add search for message icon */}
