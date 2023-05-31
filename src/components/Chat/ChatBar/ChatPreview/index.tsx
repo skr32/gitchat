@@ -7,7 +7,7 @@ export function ChatPreview() {
   const [chats, setChats] = useState<{ name: string; message: string }[]>([]);
 
   useEffect(() => {
-    const token = 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NzcyYzk0MmM0MDhjNGI5MzRmYWU1OSIsIm5hbWUiOiJ0ZXN0IiwiaWF0IjoxNjg1NTMxODEzLCJleHAiOjE3MTcwODg3Mzl9.mCre5BG5C5psHn7Eqe3W1F3IPSLam2os8Jrv7B66HDo';
+    const token = localStorage.getItem('token');
     fetch('http://localhost:5000/api/threads/allthreads', {
       headers: {
         'Authorization': `${token}`
@@ -24,7 +24,7 @@ export function ChatPreview() {
             setLoading(false);
             console.log(newThread);
         }
-        console.log(chats[0].message);
+        console.log(chats.length);
       });
   }, []);
   if (loading) {

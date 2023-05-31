@@ -6,8 +6,7 @@ export function Chat({ expanded }: any) {
     // to do: add library
     // hacky way to decode JWT token. Pleeeaase don't do this in production! Use a library instead!!
 
-    // const token = localStorage.getItem('token');
-    const token = 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NzcyYzk0MmM0MDhjNGI5MzRmYWU1OSIsIm5hbWUiOiJ0ZXN0IiwiaWF0IjoxNjg1NTMxODEzLCJleHAiOjE3MTcwODg3Mzl9.mCre5BG5C5psHn7Eqe3W1F3IPSLam2os8Jrv7B66HDo';
+    const token = localStorage.getItem('token');
     const decodedToken = parseJwt(token);
     // console.log(decodedToken);
     function parseJwt(token) {

@@ -77,7 +77,31 @@ router.post('/register', (req, res) => {
                 password: hash
             });
             newUser.save()
-                .then(user => res.json(user))
+            .then(user => {
+                const payload = {
+                    id: user.id,
+                    name: user.username,
+                };
+                console.log(payload);
+                // Sign token
+                jwt.sign(
+                    payload,
+                    jwt_secret,
+                    {
+                        expiresIn: 31556926, // 1 year in seconds
+                    },
+                    (err, token) => {
+                        res.json({
+                            success: true,
+                            token: "bearer " + token,
+                            name: user.name,
+                            username: user.username,
+                            userId: user._id,
+                        });
+                    }
+                );
+            })
+                //.then(user => res.json(user))
                 .catch(err => res.status(400).json({ username: "Username already exists" }));
         });
     });
