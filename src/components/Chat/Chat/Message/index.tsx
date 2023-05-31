@@ -29,11 +29,13 @@ export function Message() {
         }
     })
         .then(response => response.json())
-        .then(messages => {messages.forEach(message => addMessage(message))})
-        .then(() => {
-            // Scroll to bottom of message list
-            messagesList.scrollTop = messagesList.scrollHeight;
+        .then(messages => {
+            messages.forEach(message => addMessage(message))
         })
+        // .then(() => {
+        //     // Scroll to bottom of message list
+        //     messagesList.scrollTop = messagesList.scrollHeight;
+        // })
         .catch(error => console.error(error));
 
     // // Prevent form submission and send message to server on button click
