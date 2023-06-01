@@ -1,15 +1,22 @@
 import './style.scss'
 import { useState } from 'react'
 import logo from '../../../assets/chatLogo.png'
-import { ChatPreview } from './ChatPreview';
+import { ChatPreview, selectedThreadId } from './ChatPreview';
 import { Settings } from './Settings';
 
-export function ChatBar() {
-    const [isOpen, setIsOpen] = useState(true);
+interface MyComponentProps {
+    selectedThreadId: string;
+    setSelectedThreadId: React.Dispatch<React.SetStateAction<string>>;
+  }
+  
 
+export function ChatBar(thread: MyComponentProps) {
+    const [isOpen, setIsOpen] = useState(true);
+    
     const toggleMenu = () => {
         setIsOpen(!isOpen);
     };
+
 
     return (
         <>
@@ -39,7 +46,7 @@ export function ChatBar() {
                 }}>
                     <div>
 
-                        <span className='sidebar__title'>
+                        <span className='sidebar__title' id={ thread.selectedThreadId }>
                             <h2>CodeChat<img src={logo} alt="logo" /></h2>
                         </span>
                         <div className='sidebar__upper'>
@@ -48,7 +55,7 @@ export function ChatBar() {
                         </div>
                     </div>
                     <div className='sidebar__preview'>
-                        <ChatPreview />
+                        <ChatPreview selectedThreadId={thread.selectedThreadId} setSelectedThreadId={thread.setSelectedThreadId} />
                     </div>
                 </div>
             </div>

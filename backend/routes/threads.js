@@ -2,7 +2,7 @@
 import { Thread } from '../Models.js';
 import isEmpty from 'is-empty';
 import express from 'express';
-
+import { ObjectId } from 'mongodb';
 import passport from '../passport.js';
 import { getUserIdFromBearerToken } from '../misc.js';
 
@@ -35,9 +35,50 @@ router.post('/newthread', (req, res) => {
 router.get('/allthreads', (req, res) => {
     const requestID = getUserIdFromBearerToken(req.headers.authorization);
     console.log("requestFrom: " + requestID);
-    Thread.find({members: requestID}).select('_id members') // select only username and id fields
-        .then(threads => res.json(threads))
-        .catch(err => res.status(400).json({ threads: "No threads found" }));
+    Thread.aggregate([
+      {
+        '$match': {
+          'members': new ObjectId(requestID)
+        }
+      }, {
+        '$lookup': {
+          'from': 'messages', 
+          'localField': '_id', 
+          'foreignField': 'thread', 
+          'as': 'messages'
+        }
+      }, {
+        '$addFields': {
+          'lastMessage': {
+            '$arrayElemAt': [
+              '$messages', -1
+            ]
+          }
+        }
+      }, {
+        '$lookup': {
+          'from': 'users', 
+          'localField': 'members', 
+          'foreignField': '_id', 
+          'as': 'members'
+        }
+      }, {
+        '$project': {
+          '_id': 1, 
+          'members': {
+            '_id': 1, 
+            'username': 1
+          }, 
+          'lastMessage': {
+            'from': 1, 
+            'message': 1, 
+            'date': 1
+          }
+        }
+      }
+    ])
+    .then(threads => res.json(threads))
+    .catch(err => res.status(400).json({ threads: "No threads found" }));
 });
 
 

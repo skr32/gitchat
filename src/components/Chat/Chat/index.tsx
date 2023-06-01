@@ -2,29 +2,19 @@ import "./style.scss";
 import logo from "../../../assets/chatLogo.png";
 import { Message } from "./Message";
 import { NewMessage } from "./NewMessage";
+import { getCurrentUsername } from "../../../Utils";
 
+interface MyComponentProps {
+    selectedThreadId: string;
+    setSelectedThreadId: React.Dispatch<React.SetStateAction<string>>;
+  }
 
-export function Chat({ expanded }: any) {
+export function Chat({ expanded }: any, thread: MyComponentProps) {
     // to do: add library
     // hacky way to decode JWT token. Pleeeaase don't do this in production! Use a library instead!!
 
-    const token = localStorage.getItem("token");
-    const decodedToken = parseJwt(token);
-    function parseJwt(token) {
-        var base64Url = token.split(".")[1];
-        var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-        var jsonPayload = decodeURIComponent(
-            window
-                .atob(base64)
-                .split("")
-                .map(function (c) {
-                    return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
-                })
-                .join("")
-        );
-
-        return JSON.parse(jsonPayload);
-    }
+    console.log(thread.selectedThreadId)
+    
 
     return (
         <>
@@ -38,7 +28,7 @@ export function Chat({ expanded }: any) {
                         <img src={logo}></img>
                     </span>
                     <span>
-                        <p>{decodedToken.name}</p>
+                        <p>{getCurrentUsername()}</p>
                     </span>
                     <span>
                         {/* add search for message icon */}
