@@ -1,7 +1,5 @@
 import './style.scss';
-import logo from '../../../../assets/chatLogo.png';
 import { useEffect, useState } from 'react';
-import { renderMessages } from '../../Chat/Message';
 
 import { getCurrentUserId, getAuthToken } from '../../../../Utils';
 

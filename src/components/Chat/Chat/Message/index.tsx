@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import './style.scss'
-import { getAuthToken, getCurrentUserId, getCurrentUsername } from '../../../../Utils';
+import { getAuthToken, getCurrentUserId, } from '../../../../Utils';
 
 let returnedThreadId: any = null;
 export function renderMessages(threadId: any) {
@@ -8,9 +8,7 @@ export function renderMessages(threadId: any) {
     console.log('here' + returnedThreadId);
     return (threadId);
 }
-export function Message({ selectedThreadId, changeSelectedThreadId, messageList, setMessageList }: any) {
-    const [processedMessages, setProcessedMessages] = useState<{ name: string, message: string, date: Date }[]>([]);
-
+export function Message({ selectedThreadId, messageList, setMessageList }: any) {
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -47,8 +45,7 @@ export function Message({ selectedThreadId, changeSelectedThreadId, messageList,
                             isCurrentUser: isCurrentUser ? 'true' : 'false'
                         };
                     });
-                    setMessageList(newMessages)
-                    setProcessedMessages(prevMessages => [...prevMessages, ...newMessages]);
+                    setMessageList(newMessages);
                 })
                 .catch(error => {
                     console.error('Error fetching messages:', error);
@@ -60,7 +57,7 @@ export function Message({ selectedThreadId, changeSelectedThreadId, messageList,
     return (
         <>
             {messageList.length > 0 ? (
-                messageList.map((message, index) => (
+                messageList.map((message: any, index: any) => (
                     <div
                         className={`message ${message.isCurrentUser === 'true' ? 'right-corner' : 'left-corner'}`}
                         key={index} 

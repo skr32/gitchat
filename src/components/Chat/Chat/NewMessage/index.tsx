@@ -2,7 +2,7 @@ import './style.scss'
 import { useState } from "react";
 import { getAuthToken } from '../../../../Utils';
 
-export function NewMessage({selectedThreadId, changeSelectedThreadId}: any) {
+export function NewMessage({selectedThreadId}: any) {
     const [message, setMessage] = useState("");
     console.log( 'ebeneNewMessage: ' + selectedThreadId)
     const handleNewMessageChange = (event: any) => {
@@ -23,8 +23,6 @@ export function NewMessage({selectedThreadId, changeSelectedThreadId}: any) {
             }),
         })
             .then((response) => response.json())
-            .then((data) => {
-            })
             .catch((error) => {
                 console.error("Error:", error);
             });

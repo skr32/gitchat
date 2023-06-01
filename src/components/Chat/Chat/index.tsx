@@ -92,7 +92,7 @@ export function Chat({expanded, selectedThreadId, changeSelectedThreadId}: any) 
                     <Message selectedThreadId={selectedThreadId} key={selectedThreadId} changeSelectedThreadId={changeSelectedThreadId} messageList={messageList} setMessageList={setMessageList}/>
                 </div>
                 {/* input type text ; send button */}
-                <NewMessage selectedThreadId={selectedThreadId} key={selectedThreadId} changeSelectedThreadId={changeSelectedThreadId}/>
+                <NewMessage selectedThreadId={selectedThreadId} key={selectedThreadId} />
             </div>
         </>
     );
