@@ -4,9 +4,9 @@ import './style.scss';
 
 export function Settings() {const [showDiv, setShowDiv] = useState(false);
     const [primaryColor, setPrimaryColor] = useState(() => localStorage.getItem('primaryColor') || '#6C72CB');
-    const [secondaryColor, setSecondaryColor] = useState(() => localStorage.getItem('secondaryColor') || '#CB69C1');
+    const [secondaryColor, setSecondaryColor] = useState(() => localStorage.getItem('secondaryColor') || '#ffae00');
     const [backgroundColor, setBackgroundColor] = useState(() => localStorage.getItem('backgroundColor') || '#242424');
-    const [contrastColor, setContrastColor] = useState(() => localStorage.getItem('contrastColor') || '#2e2735');
+    const [contrastColor, setContrastColor] = useState(() => localStorage.getItem('contrastColor') || '#303030');
   
     useEffect(() => {
       localStorage.setItem('primaryColor', primaryColor);
