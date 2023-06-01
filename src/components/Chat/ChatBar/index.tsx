@@ -1,12 +1,12 @@
 import './style.scss'
 import { useState } from 'react'
 import logo from '../../../assets/chatLogo.png'
-import { ChatPreview } from './ChatPreview';
+import { ChatPreview, selectedThreadId } from './ChatPreview';
 import { Settings } from './Settings';
 
-export function ChatBar() {
+export function ChatBar({selectedThreadId, changeSelectedThreadId}: any) {
     const [isOpen, setIsOpen] = useState(true);
-
+    console.log('ebene2: '+selectedThreadId);
     const toggleMenu = () => {
         setIsOpen(!isOpen);
     };
@@ -48,7 +48,7 @@ export function ChatBar() {
                         </div>
                     </div>
                     <div className='sidebar__preview'>
-                        <ChatPreview />
+                        <ChatPreview key={selectedThreadId} selectedThreadId={selectedThreadId} changeSelectedThreadId={changeSelectedThreadId} />
                     </div>
                 </div>
             </div>

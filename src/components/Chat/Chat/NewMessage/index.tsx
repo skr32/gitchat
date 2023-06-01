@@ -1,5 +1,6 @@
 import './style.scss'
 import { useState } from "react";
+import { getAuthToken } from '../../../../Utils';
 
 export function NewMessage() {
     const [message, setMessage] = useState("");
@@ -8,31 +9,13 @@ export function NewMessage() {
         setMessage(event.target.value);
     };
 
-    const token = localStorage.getItem("token");
-    const decodedToken = parseJwt(token);
-    function parseJwt(token) {
-        var base64Url = token.split(".")[1];
-        var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-        var jsonPayload = decodeURIComponent(
-            window
-                .atob(base64)
-                .split("")
-                .map(function (c) {
-                    return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
-                })
-                .join("")
-        );
-
-        return JSON.parse(jsonPayload);
-    }
-
     const sendNewMessage = () => {
         // do something with message
         fetch("http://localhost:5000/api/messages/newmessage", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `${token}`,
+                Authorization: `${getAuthToken()}`,
             },
             body: JSON.stringify({
                 message: message,
