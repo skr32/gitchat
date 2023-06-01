@@ -15,8 +15,8 @@ export function ChatWindow() {
     return (
       <>
       <div className='chat'>
-        <ChatBar selectedThreadId={selectedThreadId} setSelectedThreadId={setSelectedThreadId} />
-        <Chat expanded={isExpanded} selectedThreadId={selectedThreadId} setSelectedThreadId={setSelectedThreadId} />
+        <ChatBar selectedThreadId={selectedThreadId} changeSelectedThreadId={changeSelectedThreadId} />
+        <Chat expanded={isExpanded} selectedThreadId={selectedThreadId} changeSelectedThreadId={changeSelectedThreadId} />
       </div>
       </>
     );

@@ -4,16 +4,12 @@ import { Message } from "./Message";
 import { NewMessage } from "./NewMessage";
 import { getCurrentUsername } from "../../../Utils";
 
-interface MyComponentProps {
-    selectedThreadId: string;
-    setSelectedThreadId: React.Dispatch<React.SetStateAction<string>>;
-  }
 
-export function Chat({ expanded }: any, thread: MyComponentProps) {
+export function Chat({expanded, selectedThreadId, changeSelectedThreadId}: any) {
     // to do: add library
     // hacky way to decode JWT token. Pleeeaase don't do this in production! Use a library instead!!
 
-    console.log(thread.selectedThreadId)
+    console.log('ebeneChat: ' + selectedThreadId)
     
 
     return (
@@ -46,7 +42,7 @@ export function Chat({ expanded }: any, thread: MyComponentProps) {
                 </div>
                 {/* messages left and right  */}
                 <div className="message-container">
-                    <Message />
+                    <Message selectedThreadId={selectedThreadId} key={selectedThreadId} changeSelectedThreadId={changeSelectedThreadId}/>
                 </div>
                 {/* input type text ; send button */}
                 <NewMessage />

@@ -7,13 +7,9 @@ import { getCurrentUserId, getAuthToken } from '../../../../Utils';
 
 export let selectedThreadId: string = '';
 
-interface MyComponentProps {
-  selectedThreadId: string;
-  setSelectedThreadId: React.Dispatch<React.SetStateAction<string>>;
-}
 
-export function ChatPreview(thread: MyComponentProps) {
-  console.log('here' + selectedThreadId);
+export function ChatPreview({selectedThreadId, changeSelectedThreadId}: any) {
+  console.log('ebene3: ' + selectedThreadId);
 
   const [loading, setLoading] = useState(true);
   const [chats, setChats] = useState<{ id: string, name: string; message: string }[]>([]);
@@ -48,7 +44,7 @@ export function ChatPreview(thread: MyComponentProps) {
   return (
     <div>
       {chats.map((chat, index) => (
-        <div key={index} className='chat-preview' id={chat.id} onClick={thread.setSelectedThreadId(chat.id)} >
+        <div key={index} className='chat-preview' id={chat.id} onClick={() => changeSelectedThreadId(chat.id)}  >
         {/* onClick={() => renderMessages(chat.id)}> */}
           {/* <img src={chat.img} alt=''></img> */}
           <span className='chat-preview__info'>

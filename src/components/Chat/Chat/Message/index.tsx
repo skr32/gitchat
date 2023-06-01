@@ -8,19 +8,16 @@ export function renderMessages(threadId: any) {
     console.log('here' + returnedThreadId);
     return (threadId);
 }
-export function Message() {
+export function Message({selectedThreadId, changeSelectedThreadId}: any) {
     const [processedMessages, setProcessedMessages] = useState<{ name: string, message: string, date: Date }[]>([]);
-
-    useEffect(() => {
-    }, [returnedThreadId]);
-   // setTimeout(() => console.log(returnedThreadId), 3000)
-
+    console.log('ebeneMessage: ' + selectedThreadId);
+    
     useEffect(() => {
 
         // to do: make threadId dynamic
         console.log(returnedThreadId);
-        //  fetch('http://localhost:5000/api/messages/allmessages?thread=' + returnedThreadId, {
-        fetch('http://localhost:5000/api/messages/allmessages?thread=64779063ade42ab9cb3b1fe1', {
+        fetch('http://localhost:5000/api/messages/allmessages?thread=' + selectedThreadId, {
+        //fetch('http://localhost:5000/api/messages/allmessages?thread=64779063ade42ab9cb3b1fe1', {
             headers: {
                 'Authorization': `${getAuthToken()}`
             }

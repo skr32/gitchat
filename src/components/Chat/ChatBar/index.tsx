@@ -4,19 +4,12 @@ import logo from '../../../assets/chatLogo.png'
 import { ChatPreview, selectedThreadId } from './ChatPreview';
 import { Settings } from './Settings';
 
-interface MyComponentProps {
-    selectedThreadId: string;
-    setSelectedThreadId: React.Dispatch<React.SetStateAction<string>>;
-  }
-  
-
-export function ChatBar(thread: MyComponentProps) {
+export function ChatBar({selectedThreadId, changeSelectedThreadId}: any) {
     const [isOpen, setIsOpen] = useState(true);
-    
+    console.log('ebene2: '+selectedThreadId);
     const toggleMenu = () => {
         setIsOpen(!isOpen);
     };
-
 
     return (
         <>
@@ -46,7 +39,7 @@ export function ChatBar(thread: MyComponentProps) {
                 }}>
                     <div>
 
-                        <span className='sidebar__title' id={ thread.selectedThreadId }>
+                        <span className='sidebar__title'>
                             <h2>CodeChat<img src={logo} alt="logo" /></h2>
                         </span>
                         <div className='sidebar__upper'>
@@ -55,7 +48,7 @@ export function ChatBar(thread: MyComponentProps) {
                         </div>
                     </div>
                     <div className='sidebar__preview'>
-                        <ChatPreview selectedThreadId={thread.selectedThreadId} setSelectedThreadId={thread.setSelectedThreadId} />
+                        <ChatPreview key={selectedThreadId} selectedThreadId={selectedThreadId} changeSelectedThreadId={changeSelectedThreadId} />
                     </div>
                 </div>
             </div>
