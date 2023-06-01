@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './style.scss'
-import { getAuthToken, getCurrentUsername } from '../../../../Utils';
+import { getAuthToken, getCurrentUserId, getCurrentUsername } from '../../../../Utils';
 
 let returnedThreadId: any = null;
 export function renderMessages(threadId: any) {
@@ -8,10 +8,22 @@ export function renderMessages(threadId: any) {
     console.log('here' + returnedThreadId);
     return (threadId);
 }
-export function Message({ selectedThreadId, changeSelectedThreadId }: any) {
+export function Message({ selectedThreadId, changeSelectedThreadId, messageList, setMessageList }: any) {
     const [processedMessages, setProcessedMessages] = useState<{ name: string, message: string, date: Date }[]>([]);
-    console.log('ebeneMessage: ' + selectedThreadId);
 
+    const messagesEndRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (messagesEndRef.current !== null) { // check that the ref object is not null
+          // Scroll to the end of the chat window on load
+          messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+      }, [messageList]); // add messageList as a dependency to re-trigger effect when new messages are added
+    
+
+
+    console.log('ebeneMessage: ' + selectedThreadId);
+    console.log(messageList)
     useEffect(() => {
 
         // to do: make threadId dynamic
@@ -24,15 +36,18 @@ export function Message({ selectedThreadId, changeSelectedThreadId }: any) {
             })
                 .then(response => response.json())
                 .then(messages => {
-                    const newMessages = messages.map((message: { fromUsername: string; message: string; date: Date; }) => {
-                        const isCurrentUser = getCurrentUsername() === message.fromUsername;
+                    //console.log(messages)
+                    const newMessages = messages.map((message: { fromUserId: string; fromUsername: string; message: string; date: Date; }) => {
+                        const isCurrentUser = getCurrentUserId() === message.fromUserId;
                         return {
-                            name: isCurrentUser ? 'true' : 'false',
+                            name: message.fromUsername,
                             message: message.message,
-                            date: message.date
+                            date: message.date,
+                            from: message.fromUserId,
+                            isCurrentUser: isCurrentUser ? 'true' : 'false'
                         };
                     });
-
+                    setMessageList(newMessages)
                     setProcessedMessages(prevMessages => [...prevMessages, ...newMessages]);
                 })
                 .catch(error => {
@@ -44,13 +59,14 @@ export function Message({ selectedThreadId, changeSelectedThreadId }: any) {
 
     return (
         <>
-            {processedMessages.length > 0 ? (
-                processedMessages.map((message, index) => (
+            {messageList.length > 0 ? (
+                messageList.map((message, index) => (
                     <div
-                        className={`message ${message.name === 'true' ? 'right-corner' : 'left-corner'}`}
-                        key={index}
+                        className={`message ${message.isCurrentUser === 'true' ? 'right-corner' : 'left-corner'}`}
+                        key={index} 
                     >
                         {message.message}
+                        <div ref={messagesEndRef} />
                     </div>
                 ))
             ) : (

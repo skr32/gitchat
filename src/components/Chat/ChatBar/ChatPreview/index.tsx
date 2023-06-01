@@ -24,8 +24,11 @@ export function ChatPreview({selectedThreadId, changeSelectedThreadId}: any) {
       .then(response => response.json())
       .then(threads => {
         for (let thread of threads) {
-
-          const threadName = thread.GroupChatName || thread.members.find((member: { _id: any }) => member._id !== getCurrentUserId)?.username || '';
+          
+          let threadName = thread.GroupChatName || '';
+          if(!thread.GroupChatName) {
+            threadName = thread.members.filter((element: any) => element._id != getCurrentUserId()).map((obj: any) => obj.username).join(", ")
+          }
           const threadLastMessage = thread?.lastMessage?.message ?? ' ';
           const newThread: { id: string, name: string, message: string } = {
             id: thread._id,
