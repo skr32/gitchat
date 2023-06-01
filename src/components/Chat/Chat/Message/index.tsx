@@ -8,36 +8,38 @@ export function renderMessages(threadId: any) {
     console.log('here' + returnedThreadId);
     return (threadId);
 }
-export function Message({selectedThreadId, changeSelectedThreadId}: any) {
+export function Message({ selectedThreadId, changeSelectedThreadId }: any) {
     const [processedMessages, setProcessedMessages] = useState<{ name: string, message: string, date: Date }[]>([]);
     console.log('ebeneMessage: ' + selectedThreadId);
-    
+
     useEffect(() => {
 
         // to do: make threadId dynamic
         console.log(returnedThreadId);
-        fetch('http://localhost:5000/api/messages/allmessages?thread=' + selectedThreadId, {
-        //fetch('http://localhost:5000/api/messages/allmessages?thread=64779063ade42ab9cb3b1fe1', {
-            headers: {
-                'Authorization': `${getAuthToken()}`
-            }
-        })
-            .then(response => response.json())
-            .then(messages => {
-                const newMessages = messages.map((message: { fromUsername: string; message: string; date: Date; }) => {
-                    const isCurrentUser = getCurrentUsername() === message.fromUsername;
-                    return {
-                        name: isCurrentUser ? 'true' : 'false',
-                        message: message.message,
-                        date: message.date
-                    };
-                });
-
-                setProcessedMessages(prevMessages => [...prevMessages, ...newMessages]);
+        if (selectedThreadId) {
+            fetch('http://localhost:5000/api/messages/allmessages?thread=' + selectedThreadId, {
+                headers: {
+                    'Authorization': `${getAuthToken()}`
+                }
             })
-            .catch(error => {
-                console.error('Error fetching messages:', error);
-            });
+                .then(response => response.json())
+                .then(messages => {
+                    const newMessages = messages.map((message: { fromUsername: string; message: string; date: Date; }) => {
+                        const isCurrentUser = getCurrentUsername() === message.fromUsername;
+                        return {
+                            name: isCurrentUser ? 'true' : 'false',
+                            message: message.message,
+                            date: message.date
+                        };
+                    });
+
+                    setProcessedMessages(prevMessages => [...prevMessages, ...newMessages]);
+                })
+                .catch(error => {
+                    console.error('Error fetching messages:', error);
+                });
+        }
+
     }, []);
 
     return (
@@ -52,7 +54,7 @@ export function Message({selectedThreadId, changeSelectedThreadId}: any) {
                     </div>
                 ))
             ) : (
-                <div>Loading messages...</div>
+                <div>Start Chatting</div>
             )}
         </>
     )
