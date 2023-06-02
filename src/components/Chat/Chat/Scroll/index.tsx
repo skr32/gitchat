@@ -23,6 +23,8 @@ export function Scroll({ containerRef }: any) {
     };
   }, []);
 
+  
+
   const scrollToBottom = () => {
     const container = containerRef.current;
     if (container) {
@@ -42,3 +44,38 @@ export function Scroll({ containerRef }: any) {
     </div>
   );
 }
+
+/*import { useRef, useEffect } from "react";
+import './style.scss';
+
+const ChatWindow = () => {
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    if (messagesEndRef.current !== null) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, []);
+
+  return (
+    <div className="chat-window">
+  
+      <div className="messages">
+        
+      </div>
+
+      
+      <button onClick={scrollToBottom}>Scroll to Bottom</button>
+
+      
+      <div ref={messagesEndRef}></div>
+    </div>
+  );
+};
+
+
+*/
