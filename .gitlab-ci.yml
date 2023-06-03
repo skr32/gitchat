@@ -1,11 +1,17 @@
-backend:
+stages:
+  - build
+ # - test
+  - deploy
+
+
+backend_build:
   trigger:
     include: backend/.gitlab-ci.yml
     strategy: depend
   rules:
     - changes: [backend/*]
 
-frontend:
+frontend_build:
   trigger:
     include: frontend/.gitlab-ci.yml
     strategy: depend
@@ -19,6 +25,9 @@ curl_ntfy:
     - apk update && apk add curl
     - curl -d "reload docker" ntfy.sh/sporting-casualty-booted
   needs:
-    - job: backend
-    - job: frontend
+    - job: backend_build
+      optional: true
+    - job: frontend_build
+      optional: true
+
 
