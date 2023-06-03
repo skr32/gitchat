@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { BrowserRouter, Link } from 'react-router-dom';
 import './style.scss';
 import logo from '../../assets/chatLogo.png';
 import { SvgButton } from '../SvgButton';
@@ -25,6 +24,72 @@ export function LogIn() {
         return focusedInput === inputName;
     };
 
+    const [isLoginValid, setLoginValid] = useState(true);
+    const [isSignupValid, setSignupValid] = useState(true);
+  
+    function handleLogin(event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+        if (!loginName || !loginPassword) {
+          alert('Please fill in all fields');
+          return;
+        }
+        fetch('http://localhost:5000/api/users/login', {
+          method: 'POST',
+          body: JSON.stringify({
+            username: loginName,
+            password: loginPassword
+          }),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => {
+            if (response.ok) {
+              return response.json();
+            } else {
+              throw new Error('Invalid login credentials');
+            }
+          })
+          .then(data => {
+            localStorage.setItem('token', data.token);
+            window.location.href = '/chats';
+          })
+          .catch(error => {
+            setLoginValid(false); // Set login validation state to false for invalid login
+            console.error(error);
+          });
+      }
+      
+  
+    function handleSignup(event: React.FormEvent<HTMLFormElement>) {
+      event.preventDefault();
+      if (!signupName || !signupPassword) {
+        alert('Please fill in all fields');
+        return;
+      }
+      fetch('http://localhost:5000/api/users/register', {
+        method: 'POST',
+        body: JSON.stringify({
+          username: signupName,
+          password: signupPassword
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          localStorage.setItem('token', data.token);
+          window.location.href = '/chats';
+        })
+        .catch(error => console.error(error))
+        .finally(() => {
+          setSignupValid(false); // Set signup validation state to false for invalid signup
+        });
+    }
+  
+
+
     return (
         <>
             <div className="join-container">
@@ -36,10 +101,12 @@ export function LogIn() {
                         <input
                             type="text"
                             onClick={() => handleInputClick('loginName')}
-                            className={isFocused('loginName') ? 'focus' : ''}
+                            className={`${
+                              isFocused('loginName') ? 'focus' : ''
+                            } ${isLoginValid ? '' : 'invalid'}`}
                             value={loginName}
                             onChange={(event) => setLoginName(event.target.value)}
-                        />
+                          />
                         <label
                             className={
                                 isFocused('loginName') || loginName ? 'focused' : ''
@@ -54,9 +121,11 @@ export function LogIn() {
                             type="password"
                             value={loginPassword}
                             onClick={() => handleInputClick('loginPassword')}
-                            className={isFocused('loginPassword') ? 'focus' : ''}
+                            className={`${
+                              isFocused('loginPassword') ? 'focus' : ''
+                            } ${isLoginValid ? '' : 'invalid'}`}
                             onChange={(event) => setLoginPassword(event.target.value)}
-                        />
+                          />
                         <label
                             className={
                                 isFocused('loginPassword') || loginPassword ? 'focused' : ''
@@ -65,16 +134,8 @@ export function LogIn() {
                             Password
                         </label>
                     </span>
-                    <BrowserRouter>
-                        <Link
-                            onClick={(event) =>
-                                (!loginName || !loginPassword) && event.preventDefault()
-                            }
-                            to={`/chat?name=${loginName}&password=${loginPassword}`}
-                        >
-                            <SvgButton text={'Log In'} />
-                        </Link>
-                    </BrowserRouter>
+                    <SvgButton text={'Log In'} click={handleLogin} />
+
                 </div>
                 <div className="join-container__inner">
                     <h2>
@@ -87,7 +148,7 @@ export function LogIn() {
                             className={isFocused('signupName') ? 'focus' : ''}
                             value={signupName}
                             onChange={(event) => setSignupName(event.target.value)}
-                        />
+                          />
                         <label
                             className={
                                 isFocused('signupName') || signupName ? 'focused' : ''
@@ -104,7 +165,7 @@ export function LogIn() {
                             className={isFocused('signupPassword') ? 'focus' : ''}
                             value={signupPassword}
                             onChange={(event) => setSignupPassword(event.target.value)}
-                        />
+                          />
                         <label
                             className={
                                 isFocused('signupPassword') || signupPassword ? 'focused' : ''
@@ -113,16 +174,9 @@ export function LogIn() {
                             Password
                         </label>
                     </span>
-                    <BrowserRouter>
-                        <Link
-                            onClick={(event) =>
-                                (!signupName || !signupPassword) && event.preventDefault()
-                            }
-                            to={`/chat?name=${signupName}&password=${signupPassword}`}
-                        >
-                            <SvgButton text={'Sign Up'} />
-                        </Link>
-                    </BrowserRouter>
+
+                    <SvgButton text={'Sign Up'} click={handleSignup} />
+
                 </div>
             </div>
             <div className="overlay_container">

@@ -9,15 +9,13 @@
 }
 
 .message {
-    max-width: 50%;
+    max-width: 70%;
     width: min-content;
     background-color: var(--contrast-color);
     padding: 15px;
     border-radius: 15px;
 
-    :last-child {
-        margin-bottom: 0px;
-    }
+    
 }
 .right-corner {
     align-self: flex-end;
