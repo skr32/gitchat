@@ -3,13 +3,60 @@ import logo from "../../../assets/chatLogo.png";
 import { Message } from "./Message";
 import { NewMessage } from "./NewMessage";
 import { getCurrentUsername } from "../../../Utils";
+import { useEffect, useState } from "react";
+import { socket } from "../../../socket";
 
 
 export function Chat({expanded, selectedThreadId, changeSelectedThreadId}: any) {
-    // to do: add library
-    // hacky way to decode JWT token. Pleeeaase don't do this in production! Use a library instead!!
+    const [isConnected, setIsConnected] = useState(socket.connected);
+    const [messageList, setMessageList] = useState<{ name: string, message: string, date: Date, from: string, isCurrentUser: boolean }[]>([])
 
-    console.log('ebeneChat: ' + selectedThreadId)
+    useEffect
+
+    //socketIO stuff
+  useEffect(() => {
+    function onConnect() {
+      setIsConnected(true);
+      console.log('websocket connected');
+    }
+
+    function onDisconnect() {
+      setIsConnected(false);
+    }
+
+    socket.on('connect', onConnect);
+    socket.on('disconnect', onDisconnect);
+    socket.on('newMessage', message => setMessageList(message));
+
+    return () => {
+      socket.off('connect', onConnect);
+      socket.off('disconnect', onDisconnect);
+    };
+  }, []);
+
+    //messagelist prop
+    
+    function addMessageToList(message: any){
+        console.log("bin daaaaa");
+        const isCurrentUser = getCurrentUsername() === message.name;
+        const newMessage = {
+            ...message,
+            isCurrentUser: isCurrentUser ? 'true' : 'false'
+        }
+        setMessageList([...messageList, newMessage]);
+    }
+    useEffect(() => {
+
+        socket.on('newMessage',  (data: any) => addMessageToList(data));
+        // socket.on('newMessage',  (data: any) => setMessageList([...messageList, data]));
+    }, [socket, messageList]);
+
+    console.log(messageList)
+    
+    useEffect(() => {
+        console.log('subscribing... ' + selectedThreadId)
+        socket.emit('subscribe', selectedThreadId);
+      }, [selectedThreadId]);
     
 
     return (
@@ -42,10 +89,10 @@ export function Chat({expanded, selectedThreadId, changeSelectedThreadId}: any) 
                 </div>
                 {/* messages left and right  */}
                 <div className="message-container">
-                    <Message selectedThreadId={selectedThreadId} key={selectedThreadId} changeSelectedThreadId={changeSelectedThreadId}/>
+                    <Message selectedThreadId={selectedThreadId} key={selectedThreadId} changeSelectedThreadId={changeSelectedThreadId} messageList={messageList} setMessageList={setMessageList}/>
                 </div>
                 {/* input type text ; send button */}
-                <NewMessage />
+                <NewMessage selectedThreadId={selectedThreadId} key={selectedThreadId} />
             </div>
         </>
     );

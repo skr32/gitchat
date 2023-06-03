@@ -44,9 +44,13 @@ router.post('/newmessage', (req, res) => {
     
     //emit the message to the thread. this saves a db call to get the username
     const messageWithUsername = {
-        ...newMessage.toObject(),
-        fromUsername: getUsernameFromBearerToken(req.headers.authorization),
+        //...newMessage.toObject(),
+        name: getUsernameFromBearerToken(req.headers.authorization),
+        message: newMessage.message,
+        date: new Date(),
+        from: newMessage.from
     };
+    
     console.log (messageWithUsername);
     req.io.to(_thread).emit("newMessage", messageWithUsername);
     console.log("emitted in thread: " + _thread);
@@ -80,10 +84,13 @@ router.get('/allmessages', (req, res) => {
             'thread': 1, 
             'message': 1, 
             'date': 1, 
+            'fromUserId': '$fromObj._id', 
             'fromUsername': '$fromObj.username'
           }
         }, {
           '$unwind': '$fromUsername'
+        }, {
+          '$unwind': '$fromUserId'
         }
       ])
     .then(messages => res.json(messages))

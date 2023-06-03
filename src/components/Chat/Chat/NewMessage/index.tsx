@@ -2,9 +2,9 @@ import './style.scss'
 import { useState } from "react";
 import { getAuthToken } from '../../../../Utils';
 
-export function NewMessage() {
+export function NewMessage({selectedThreadId}: any) {
     const [message, setMessage] = useState("");
-
+    console.log( 'ebeneNewMessage: ' + selectedThreadId)
     const handleNewMessageChange = (event: any) => {
         setMessage(event.target.value);
     };
@@ -19,12 +19,10 @@ export function NewMessage() {
             },
             body: JSON.stringify({
                 message: message,
-                thread: "64779063ade42ab9cb3b1fe1", // hardcoded for now, change to current state thread later
+                thread: selectedThreadId, // hardcoded for now, change to current state thread later
             }),
         })
             .then((response) => response.json())
-            .then((data) => {
-            })
             .catch((error) => {
                 console.error("Error:", error);
             });
