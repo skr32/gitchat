@@ -2,6 +2,7 @@ stages:
   - build
 
 docker_build:
+  image: docker:latest
   stage: build
   script:
     - docker build -t skr20/chatapp_front:latest .
