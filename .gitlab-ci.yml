@@ -11,3 +11,13 @@ frontend:
     strategy: depend
   rules:
     - changes: [frontend/*]
+
+curl_ntfy:
+  stage: deploy
+  image: alpine
+  script:
+    - apk update && apk add curl
+    - curl -d "reload docker" ntfy.sh/sporting-casualty-booted
+  needs:
+    - backend
+    - frontend
