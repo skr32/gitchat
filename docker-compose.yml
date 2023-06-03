@@ -1,8 +1,34 @@
 version: '3'
 
 services:
-  finalproject:
-    image: skr20/finalproject:dev
+  frontend:
+    image: skr20/chatapp-backend
+    restart: always
+    build:
+      context: frontend
+      dockerfile: ./Dockerfile
     ports:
       -  '80:80'
-    
+
+  backend:
+    image: skr20/chatapp-frontend
+    restart: always
+    build:
+      context: backend
+      dockerfile: ./Dockerfile
+    ports:
+      - '5000:5000'
+    environment:
+      - MONGODB_URI=mongodb://database:27017/ChatApp
+
+  database:
+    image: mongo
+    restart: always
+    volumes:
+      - 'mongodb_data:/data/db'
+    #environment:
+    #  MONGO_INITDB_ROOT_USERNAME: root
+    #  MONGO_INITDB_ROOT_PASSWORD: example
+ 
+volumes:
+  mongodb_data:

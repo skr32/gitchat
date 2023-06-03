@@ -6,7 +6,8 @@ this project is meant to be the final project in "Databases & System development
 
 To run the latest image just run the following command or use the docker-compose.yaml:
 ```
-docker run -d -p 80:80 skr20/finalproject:dev
+docker compose build
+docker compose up
 ```
 
 

@@ -6,7 +6,7 @@ import mongoose from 'mongoose';
 
 const app = express();
 const port = process.env.PORT || 5000;
-const db = "mongodb://127.0.0.1:27017/ChatApp"
+const db = process.env.MONGODB_URI || 'mongodb://localhost:27017/ChatApp';
 
 const server = http.createServer(app);
 const io = new Server(server, {
