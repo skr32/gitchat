@@ -1,13 +1,8 @@
-backend:
-  trigger:
-    include: backend/.gitlab-ci.yml
-    strategy: depend
-  rules:
-    - changes: [backend/*]
+stages:
+  - build
 
-frontend:
-  trigger:
-    include: frontend/.gitlab-ci.yml
-    strategy: depend
-  rules:
-    - changes: [frontend/*]
+docker_build:
+  stage: build
+  script:
+    - docker build -t skr20/chatapp_front:latest .
+#    - docker push example.com/example-image:latest
