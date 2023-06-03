@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import './style.scss';
 import ReactDOM from 'react-dom';
+import { backend_url, getAuthToken, getCurrentUserId } from '../../../../Utils';
 
 export function CreateChat() {
     const [createChat, setCreateChat] = useState(false);
@@ -28,14 +29,14 @@ export function CreateChat() {
     };
 
     useEffect(() => {
-        fetch('http://localhost:5000/api/users/allusers')
+        fetch(backend_url + '/api/users/allusers')
             .then(response => response.json())
             .then(users => {
                 const usersData = users.map((user: { _id: string; username: string }) => ({
                     _id: user._id,
                     name: user.username
                 }));
-                setAllUsers(usersData);
+                setAllUsers(usersData.filter((element: any) => element._id != getCurrentUserId()));
             })
             .catch(error => console.error(error));
     }, []);
@@ -57,21 +58,14 @@ export function CreateChat() {
             return;
         }
 
-        const token = jwtTokenRef.current?.value;
-
-        if (!token) {
-            alert('Please enter a valid JWT token.');
-            return;
-        }
-
         // POST the selected users to the API to create a new thread with JWT authorization
-        fetch('http://localhost:5000/api/threads/newthread', {
+        fetch(backend_url + '/api/threads/newthread', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
+                'Authorization': `${getAuthToken()}`
             },
-            body: JSON.stringify({ members: selectedUsers })
+            body: JSON.stringify({ members: [...selectedUsers, getCurrentUserId()] })
         })
             .then(response => {
                 if (response.ok) {
