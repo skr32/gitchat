@@ -19,5 +19,6 @@ curl_ntfy:
     - apk update && apk add curl
     - curl -d "reload docker" ntfy.sh/sporting-casualty-booted
   needs:
-    - backend
-    - frontend
+    - job: backend
+    - job: frontend
+
