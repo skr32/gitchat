@@ -3,6 +3,7 @@ import { useState } from 'react'
 import logo from '../../../assets/chatLogo.png'
 import { ChatPreview, selectedThreadId } from './ChatPreview';
 import { Settings } from './Settings';
+import { CreateChat } from './CreateChat';
 
 export function ChatBar({selectedThreadId, changeSelectedThreadId}: any) {
     const [isOpen, setIsOpen] = useState(true);
@@ -45,6 +46,7 @@ export function ChatBar({selectedThreadId, changeSelectedThreadId}: any) {
                         <div className='sidebar__upper'>
                             <h2>Inbox &nbsp;<Settings /> </h2>
                             <input type="text" placeholder='Search Chats...'></input>
+                            <CreateChat />
                         </div>
                     </div>
                     <div className='sidebar__preview'>
