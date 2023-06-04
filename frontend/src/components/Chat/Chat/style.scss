@@ -1,6 +1,7 @@
 .chat-container {
     img {
-        height:30px
+        height:30px;
+        margin-left:30px;
     }
 }
 
@@ -11,7 +12,7 @@
     align-items: center;
     height: 70px;
     padding: 20px 0;
-    width: 100vw;
+    width: 100%;
   }
   
   .top-bar > span:first-child {
