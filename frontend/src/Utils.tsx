@@ -1,7 +1,8 @@
 import jwt_decode from 'jwt-decode' 
 
 export const currentChatId: string = '';
-export const backend_url: string = process.env.REACT_APP_BACKEND_URL || window.location.origin + ':5000' || 'http://localhost:5000';
+export const backend_url: string = window.location.origin + ':5000' || 'http://localhost:5000';
+// export const backend_url: string = process.env.REACT_APP_BACKEND_URL || window.location.origin + ':5000' || 'http://localhost:5000';
 
 export const getCurrentUsername = () => {
     const token = localStorage.getItem('token')
