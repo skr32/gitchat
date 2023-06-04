@@ -8,7 +8,7 @@ backend_build:
   stage: build
   trigger:
     include: backend/.gitlab-ci.yml
-    strategy: depend
+    #strategy: depend
   rules:
     - changes: [backend/*]
 
@@ -16,7 +16,7 @@ frontend_build:
   stage: build
   trigger:
     include: frontend/.gitlab-ci.yml
-    strategy: depend
+    #strategy: depend
   rules:
     - changes: [frontend/*]
 
