@@ -45,7 +45,6 @@ export function ChatBar({selectedThreadId, changeSelectedThreadId}: any) {
                         </span>
                         <div className='sidebar__upper'>
                             <h2>Inbox &nbsp;<Settings /> </h2>
-                            <input type="text" placeholder='Search Chats...'></input>
                             <CreateChat />
                         </div>
                     </div>

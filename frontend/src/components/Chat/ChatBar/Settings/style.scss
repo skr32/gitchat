@@ -34,6 +34,9 @@
             flex-direction: row;
             width: 30%;
             justify-content: flex-start;
+            @media screen and (max-width:768px) {
+                width:inherit;
+            }
 
             label {
                 padding-left: 50px;
