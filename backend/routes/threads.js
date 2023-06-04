@@ -75,7 +75,11 @@ router.get('/allthreads', (req, res) => {
             'date': 1
           }
         }
+      }, {
+      $sort: {
+        "lastMessage.date": -1
       }
+    }
     ])
     .then(threads => res.json(threads))
     .catch(err => res.status(400).json({ threads: "No threads found" }));
