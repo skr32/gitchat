@@ -4,6 +4,7 @@ import logo from '../../../assets/chatLogo.png'
 import { ChatPreview, selectedThreadId } from './ChatPreview';
 import { Settings } from './Settings';
 import { CreateChat } from './CreateChat';
+import { LogOut } from './LogOut';
 
 export function ChatBar({selectedThreadId, changeSelectedThreadId}: any) {
     const [isOpen, setIsOpen] = useState(true);
@@ -51,6 +52,7 @@ export function ChatBar({selectedThreadId, changeSelectedThreadId}: any) {
                     <div className='sidebar__preview'>
                         <ChatPreview key={selectedThreadId} selectedThreadId={selectedThreadId} changeSelectedThreadId={changeSelectedThreadId} />
                     </div>
+                    <LogOut />
                 </div>
             </div>
         </>
