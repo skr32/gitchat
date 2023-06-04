@@ -1,7 +1,12 @@
 import jwt_decode from 'jwt-decode' 
 
 export const currentChatId: string = '';
-export const backend_url: string = window.location.origin  || 'http://localhost:5000';
+
+// backend_url change port to 5000 for local development
+export const backend_url: string = window.location.origin === 'http://localhost:8080'
+  ? 'http://localhost:5000'
+  : window.location.origin;
+
 
 export const getCurrentUsername = () => {
     const token = localStorage.getItem('token')

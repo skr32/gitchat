@@ -68,7 +68,7 @@ export function LogIn() {
         alert('Please fill in all fields');
         return;
       }
-      fetch('http://localhost:5000/api/users/register', {
+      fetch(backend_url + '/api/users/register', {
         method: 'POST',
         body: JSON.stringify({
           username: signupName,
