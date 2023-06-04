@@ -4,7 +4,7 @@ import logo from '../../../assets/chatLogo.png'
 import { ChatPreview, selectedThreadId } from './ChatPreview';
 import { Settings } from './Settings';
 import { CreateChat } from './CreateChat';
-import { LogOut } from '../Chat/LogOut';
+import { LogOut } from './LogOut';
 
 export function ChatBar({selectedThreadId, changeSelectedThreadId}: any) {
     const [isOpen, setIsOpen] = useState(true);
