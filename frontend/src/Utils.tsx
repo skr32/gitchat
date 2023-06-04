@@ -3,7 +3,7 @@ import jwt_decode from 'jwt-decode'
 export const currentChatId: string = '';
 
 // backend_url change port to 5000 for local development
-export const backend_url: string = window.location.origin === 'http://localhost:8080'
+export const backend_url: string = window.location.origin === 'http://localhost:8080' || window.location.origin === 'http://localhost'
   ? 'http://localhost:5000'
   : window.location.origin;
 
