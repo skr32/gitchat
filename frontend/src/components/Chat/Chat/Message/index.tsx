@@ -73,7 +73,7 @@ export function Message({ selectedThreadId, messageList, setMessageList }: any) 
                     >
                         {message.message}
                         <div ref={messagesEndRef} className={`message-timestamp ${message.isCurrentUser ? 'left-message' : 'right-message'}`}>
-                        {getDateTimeString(message.date)}
+                        {message.name} - {getDateTimeString(message.date)}
                         </div>
 
                     </div>
