@@ -7,11 +7,12 @@ import mongoose from 'mongoose';
 const app = express();
 const port = process.env.PORT || 5000;
 const db = process.env.MONGODB_URI || 'mongodb://localhost:27017/ChatApp';
+const cors_origin = process.env.CORS_ORIGIN || '*'
 
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: '*'
+    origin: cors_origin
   }
 });
 

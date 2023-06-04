@@ -7,8 +7,8 @@ services:
     build:
       context: frontend
       dockerfile: ./Dockerfile
-    ports:
-      -  '80:80'
+    #ports:
+    #  -  '80:80'
 
   backend:
     image: skr20/chatapp-frontend
@@ -16,8 +16,8 @@ services:
     build:
       context: backend
       dockerfile: ./Dockerfile
-    ports:
-      - '5000:5000'
+    #ports:
+    #  - '5000:5000'
     environment:
       - MONGODB_URI=mongodb://database:27017/ChatApp
 
