@@ -7,6 +7,11 @@ import { Routes, Route } from 'react-router-dom';
 
 
 const App = () => {
+  if ((localStorage.getItem('token') === null || localStorage.getItem('token') === undefined) && window.location.pathname !== '/login') {
+    return (
+      window.location.href = '/login'
+    );
+  }
 
   return (         
     <Routes>login

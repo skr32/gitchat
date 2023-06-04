@@ -28,4 +28,8 @@
         white-space: nowrap;
         text-overflow: ellipsis;
     }
+
+    &__empty {
+        text-align: center;
+    }
 }

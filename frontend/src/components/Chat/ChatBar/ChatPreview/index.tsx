@@ -39,7 +39,7 @@ export function ChatPreview({selectedThreadId, changeSelectedThreadId}: any) {
       });
   }, []);
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className='chat-preview__empty'>This place seems a bit quiet. Shall we kick-start a new chat together?</div>;
   }
   //changeSelectedThreadId("test")
   return (

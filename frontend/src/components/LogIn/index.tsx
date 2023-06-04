@@ -135,6 +135,11 @@ export function LogIn() {
                             Password
                         </label>
                     </span>
+                    
+                    {!isLoginValid && (
+                      <p className="error-message">Username or password incorrect</p>
+                    )}
+                    <br />
                     <SvgButton text={'Log In'} click={handleLogin} />
 
                 </div>
