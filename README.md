@@ -63,7 +63,7 @@ cd finalproject
   npm run dev
   ```
 
-This will start the development server on port 5000, and the database will run on port 80. Note that a database is required to run the backend. You can either use the Docker Compose method described above or install MongoDB locally:
+This will start the development server on port 5000, and the database will run on port 8080. Note that a database is required to run the backend. You can either use the Docker Compose method described above or install MongoDB locally:
 
 
 ```
