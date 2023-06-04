@@ -2,7 +2,6 @@ import { useState } from 'react';
 import './style.scss';
 import logo from '../../assets/chatLogo.png';
 import { SvgButton } from '../SvgButton';
-import { backend_url } from '../../Utils';
 
 export function LogIn() {
     const [loginName, setLoginName] = useState('');
@@ -10,8 +9,6 @@ export function LogIn() {
     const [signupName, setSignupName] = useState('');
     const [signupPassword, setSignupPassword] = useState('');
     const [login, setLogin] = useState(false);
-    const [isLoginValid, setLoginValid] = useState(true);
-    const [isSignupValid, setSignupValid] = useState(true);
 
     const toggle = () => {
         setLogin((prevState) => !prevState);
@@ -26,6 +23,9 @@ export function LogIn() {
     const isFocused = (inputName: any) => {
         return focusedInput === inputName;
     };
+
+    const [isLoginValid, setLoginValid] = useState(true);
+    const [isSignupValid, setSignupValid] = useState(true);
   
     function handleLogin(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -33,15 +33,15 @@ export function LogIn() {
           alert('Please fill in all fields');
           return;
         }
-        fetch(backend_url + '/api/users/login', {
-            method: 'POST',
-            body: JSON.stringify({
-                username: loginName,
-                password: loginPassword
-            }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
+        fetch('http://localhost:5000/api/users/login', {
+          method: 'POST',
+          body: JSON.stringify({
+            username: loginName,
+            password: loginPassword
+          }),
+          headers: {
+            'Content-Type': 'application/json'
+          }
         })
           .then(response => {
             if (response.ok) {
@@ -67,7 +67,7 @@ export function LogIn() {
         alert('Please fill in all fields');
         return;
       }
-      fetch(backend_url + '/api/users/register', {
+      fetch('http://localhost:5000/api/users/register', {
         method: 'POST',
         body: JSON.stringify({
           username: signupName,
