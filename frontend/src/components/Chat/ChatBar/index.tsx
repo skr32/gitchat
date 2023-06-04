@@ -42,7 +42,7 @@ export function ChatBar({selectedThreadId, changeSelectedThreadId, changeSelecte
                     <div>
 
                         <span className='sidebar__title'>
-                            <h2>CodeChat<img src={logo} alt="logo" /></h2>
+                            <h2>GitChat<img src={logo} alt="logo" /></h2>
                         </span>
                         <div className='sidebar__upper'>
                             <h2>Inbox &nbsp;<Settings /> </h2>
