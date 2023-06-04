@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './style.scss';
 import logo from '../../assets/chatLogo.png';
 import { SvgButton } from '../SvgButton';
+import { backend_url } from '../../Utils';
 
 export function LogIn() {
     const [loginName, setLoginName] = useState('');
@@ -33,7 +34,7 @@ export function LogIn() {
           alert('Please fill in all fields');
           return;
         }
-        fetch('http://localhost:5000/api/users/login', {
+        fetch(backend_url + '/api/users/login', {
           method: 'POST',
           body: JSON.stringify({
             username: loginName,

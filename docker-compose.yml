@@ -20,6 +20,7 @@ services:
     #  - '5000:5000'
     environment:
       - MONGODB_URI=mongodb://database:27017/ChatApp
+      - CORS_ORIGIN='https://chat.krusbersky.net' # change this to your domain or '*'
 
   database:
     image: mongo
