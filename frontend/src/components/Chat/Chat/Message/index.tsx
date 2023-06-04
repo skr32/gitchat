@@ -54,6 +54,15 @@ export function Message({ selectedThreadId, messageList, setMessageList }: any) 
 
     }, []);
 
+
+    function getDateTimeString(date: string) {
+        var dateOptions: any = { day: '2-digit', month: '2-digit', year: 'numeric' };
+        var timeOptions: any = { hour12: false, hour: '2-digit', minute:'2-digit' };
+        console.log(new Date(date).toLocaleDateString('de-DE', dateOptions) + ' ' + new Date(date).toLocaleTimeString('de-DE', timeOptions));
+        return new Date(date).toLocaleDateString('de-DE', dateOptions) + ' ' + new Date(date).toLocaleTimeString('de-DE', timeOptions);
+    }
+
+
     return (
         <>
             {messageList.length > 0 ? (
@@ -63,7 +72,10 @@ export function Message({ selectedThreadId, messageList, setMessageList }: any) 
                         key={index} 
                     >
                         {message.message}
-                        <div ref={messagesEndRef} />
+                        <div ref={messagesEndRef} className={`message-timestamp ${message.isCurrentUser ? 'left-message' : 'right-message'}`}>
+                        {getDateTimeString(message.date)}
+                        </div>
+
                     </div>
                 ))
             ) : (
