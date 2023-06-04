@@ -1,0 +1,11 @@
+.logout {
+    padding:5px 10px;
+    background-color: rgb(255, 0, 0);
+    position:absolute;
+    bottom:15px;
+    left:15px;
+    cursor: pointer;
+    &:hover {
+        filter:contrast(2)
+    }
+}
