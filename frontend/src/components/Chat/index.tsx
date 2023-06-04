@@ -8,6 +8,13 @@ import { Chat } from './Chat'
 export function ChatWindow() {
     const [isExpanded] = useState(true);
     const [selectedThreadId, setSelectedThreadId] = useState('');
+    const [selectedThreadName, setSelectedThreadName] = useState('');
+
+    function changeSelectedThreadName(name: string) {
+      setSelectedThreadName(name);
+      console.log(selectedThreadName);
+    }
+
     function changeSelectedThreadId(id: string) {
       setSelectedThreadId(id);
       console.log(selectedThreadId);
@@ -15,8 +22,8 @@ export function ChatWindow() {
     return (
       <>
       <div className='chat'>
-        <ChatBar selectedThreadId={selectedThreadId} changeSelectedThreadId={changeSelectedThreadId} />
-        <Chat expanded={isExpanded} selectedThreadId={selectedThreadId} changeSelectedThreadId={changeSelectedThreadId} />
+        <ChatBar selectedThreadId={selectedThreadId} changeSelectedThreadId={changeSelectedThreadId} changeSelectedThreadName={changeSelectedThreadName} />
+        <Chat expanded={isExpanded} selectedThreadId={selectedThreadId} changeSelectedThreadId={changeSelectedThreadId} selectedThreadName={selectedThreadName} />
       </div>
       </>
     );

@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { socket } from "../../../socket";
 
 
-export function Chat({expanded, selectedThreadId, changeSelectedThreadId}: any) {
+export function Chat({expanded, selectedThreadId, changeSelectedThreadId, selectedThreadName}: any) {
     const [isConnected, setIsConnected] = useState(socket.connected);
     const [messageList, setMessageList] = useState<{ name: string, message: string, date: Date, from: string, isCurrentUser: boolean }[]>([])
 
@@ -71,7 +71,7 @@ export function Chat({expanded, selectedThreadId, changeSelectedThreadId}: any) 
                         <img src={logo}></img>
                     </span>
                     <span>
-                        <p>{getCurrentUsername()}</p>
+                        <p>{selectedThreadName}</p>
                     </span>
                     <span>
                         {/* add search for message icon */}

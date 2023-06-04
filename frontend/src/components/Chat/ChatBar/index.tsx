@@ -6,7 +6,7 @@ import { Settings } from './Settings';
 import { CreateChat } from './CreateChat';
 import { LogOut } from './LogOut';
 
-export function ChatBar({selectedThreadId, changeSelectedThreadId}: any) {
+export function ChatBar({selectedThreadId, changeSelectedThreadId, changeSelectedThreadName}: any) {
     const [isOpen, setIsOpen] = useState(true);
     console.log('ebene2: '+selectedThreadId);
     const toggleMenu = () => {
@@ -50,7 +50,7 @@ export function ChatBar({selectedThreadId, changeSelectedThreadId}: any) {
                         </div>
                     </div>
                     <div className='sidebar__preview'>
-                        <ChatPreview key={selectedThreadId} selectedThreadId={selectedThreadId} changeSelectedThreadId={changeSelectedThreadId} />
+                        <ChatPreview key={selectedThreadId} selectedThreadId={selectedThreadId} changeSelectedThreadId={changeSelectedThreadId} changeSelectedThreadName={changeSelectedThreadName}/>
                     </div>
                     <LogOut />
                 </div>
