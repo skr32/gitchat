@@ -13,6 +13,7 @@
     background-color: var(--contrast-color);
     padding: 15px;
     border-radius: 15px;
+    padding-bottom: inherit;
 
     :last-child {
         margin-bottom: 15px;
@@ -26,4 +27,10 @@
 .left-corner {
     align-self: flex-start;
     margin-left: 15px;
+}
+
+.message-timestamp{
+    display: flex;
+    justify-content: right;
+    font-size: 12px;
 }
