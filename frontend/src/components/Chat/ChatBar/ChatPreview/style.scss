@@ -7,7 +7,7 @@
     align-items: center;
     background-color: var(--background-color);
     cursor: pointer;
-    margin:5px 0;
+    margin: 5px 0;
 
     img {
         height: 30px;
@@ -22,7 +22,7 @@
         font-weight: bold;
     }
     }
-    
+
     &__message {
         overflow: hidden;
         white-space: nowrap;
