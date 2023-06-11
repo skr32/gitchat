@@ -3,7 +3,7 @@
   --secondary-color:#ffae00;
   --contrast-color:#303030;
   --background-color:#242424;
-  --text-color:#E1D9D1;
+  --font-color:#E1D9D1;
   --dark-text-color:#454545;
   --background-rgba:rgba(23, 24, 31, 0.6);
   --shadow: 7px 7px 9px 1px rgba(0, 0, 0, 0.9), 7px 7px 9px 1px rgba(0, 0, 0, 0.9);
@@ -15,7 +15,7 @@ body{
   height: 100vh;
   overflow: hidden;
   font-family: 'Open Sans', sans-serif;
-  color:var(--text-color);
+  color:var(--font-color);
   background: var(--background-color);
   line-height: 1.5;
   font-weight: 400;
